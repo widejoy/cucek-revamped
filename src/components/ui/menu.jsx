@@ -148,7 +148,7 @@ const Menu = () => {
         </VStack>
 
         {/* Submenu */}
-        {/* Submenu */}
+
         {submenuItems.length > 0 && (
           <VStack spacing={4} align="flex-start" flex="2" pl={6}>
             {submenuItems.map((subitem, index) => (
