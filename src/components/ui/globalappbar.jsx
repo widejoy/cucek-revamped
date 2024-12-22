@@ -33,11 +33,11 @@ const GlobalAppBar = () => {
           {/* Menu Button */}
           <IconButton
             aria-label="Menu"
-            icon={<MenuIcon color="white" />}
             variant="ghost"
             colorScheme="whiteAlpha"
             onClick={toggleMenu} // Toggle menu visibility
           >
+            <MenuIcon color="white" />
             <Text ml={2} color="white">
               Menu
             </Text>
