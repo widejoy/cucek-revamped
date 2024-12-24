@@ -40,7 +40,7 @@ const Menu = () => {
           "Arts and Sports",
           "Library",
           "NSS Cell",
-          "Placement Cell",
+          "Placements",
           "PTA",
           "Gender Justice Committee",
         ]);
