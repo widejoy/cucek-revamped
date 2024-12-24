@@ -10,6 +10,7 @@ import Mca from "./screens/mca";
 import It from "./screens/it";
 import ResearchPage from "./screens/research";
 import ResearchersPage from "./screens/researchers";
+import PlacementCellPage from "./screens/PlacementCellPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route element={<It />} path="/it" />
           <Route element={<ResearchPage />} path="/research" />
           <Route element={<ResearchersPage />} path="/researchers" />
+          <Route element={<PlacementCellPage />} path="/placements"/>
         </Routes>
       </Box>
     </Box>

@@ -10,7 +10,7 @@ const GlobalAppBar = () => {
 
   return (
     <>
-      <Box as="header" bg="black" color="white" px={4} py={2}>
+      <Box as="header" bg="#4a464f" color="white" px={4} py={2}>
         <Flex align="center" justify="space-between">
           {/* Logo */}
           <Flex align="center">
