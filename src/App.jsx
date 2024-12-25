@@ -11,6 +11,7 @@ import It from "./screens/it";
 import ResearchPage from "./screens/research";
 import ResearchersPage from "./screens/researchers";
 import PlacementCellPage from "./screens/PlacementCellPage";
+import NSSCellPage from "./screens/NSSCellPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route element={<ResearchPage />} path="/research" />
           <Route element={<ResearchersPage />} path="/researchers" />
           <Route element={<PlacementCellPage />} path="/placements"/>
+          <Route element={<NSSCellPage />} path="/nss-cell" />
         </Routes>
       </Box>
     </Box>
