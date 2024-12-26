@@ -9,6 +9,8 @@ import {
   VStack,
   Separator,
   Button,
+  Badge,
+  Spinner,
 } from "@chakra-ui/react";
 
 const ResearchersPage = () => {
@@ -20,7 +22,7 @@ const ResearchersPage = () => {
     const fetchResearchers = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/research/");
-        setResearchers(response.data); // Assuming the API returns an array
+        setResearchers(response.data);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch researchers data.");
@@ -31,46 +33,60 @@ const ResearchersPage = () => {
     fetchResearchers();
   }, []);
 
-  if (loading) return <Text color="black">Loading...</Text>;
-  if (error) return <Text color="black">{error}</Text>;
+  if (loading)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minH="100vh"
+      >
+        <Spinner size="xl" color="teal.500" />
+      </Box>
+    );
+  if (error)
+    return (
+      <Text color="red.500" textAlign="center" fontSize="lg" mt={8}>
+        {error}
+      </Text>
+    );
 
   return (
-    <Box p={6}>
-      <Heading as="h1" size="xl" color="black" textAlign="center" mb={8}>
+    <Box p={8} bg="gray.100" minH="100vh">
+      <Heading as="h1" size="2xl" color="teal.600" textAlign="center" mb={10}>
         Meet Our Researchers
       </Heading>
 
-      <Stack spacing={6}>
+      <Stack spacing={8}>
         {researchers.map((researcher) => (
           <Box
             key={researcher.id}
             bg="white"
             boxShadow="lg"
-            borderRadius="md"
+            borderRadius="lg"
             overflow="hidden"
             transition="all 0.3s ease"
-            _hover={{ boxShadow: "xl", transform: "scale(1.02)" }}
+            _hover={{ boxShadow: "2xl", transform: "translateY(-5px)" }}
           >
-            <Stack direction={{ base: "column", md: "row" }} spacing={4}>
+            <Stack direction={{ base: "column", md: "row" }} spacing={6} p={6}>
               {/* Image Section */}
               <Image
                 src={researcher.image}
                 alt={researcher.name}
-                boxSize="200px"
+                boxSize={{ base: "100%", md: "200px" }}
                 objectFit="cover"
-                borderRadius="md"
+                borderRadius="lg"
               />
 
               {/* Content Section */}
-              <Box flex="1" p={4}>
-                <Heading as="h2" size="md" color="black" mb={2}>
+              <Box flex="1">
+                <Heading as="h2" size="lg" color="teal.700" mb={3}>
                   {researcher.name}
                 </Heading>
-                <Text fontSize="sm" color="black" mb={3}>
+                <Badge colorScheme="teal" mb={4} fontSize="sm">
                   {researcher.profession}
-                </Text>
+                </Badge>
 
-                {/* Expandable Details */}
                 <Details researcher={researcher} />
               </Box>
             </Stack>
@@ -89,60 +105,48 @@ const Details = ({ researcher }) => {
       <Button
         size="sm"
         colorScheme="teal"
+        variant={isExpanded ? "solid" : "outline"}
         onClick={() => setIsExpanded(!isExpanded)}
+        color={"black"}
       >
         {isExpanded ? "Show Less" : "Read More"}
       </Button>
 
       {isExpanded && (
-        <Box mt={4} p={4} borderWidth="1px" borderRadius="md" bg="gray.50">
-          <VStack align="start" spacing={4}>
-            <Box>
-              <Text fontWeight="bold" color="black">
-                Research Interests:
-              </Text>
-              <Text color="black" whiteSpace="pre-wrap">
-                {researcher.research_interests}
-              </Text>
-            </Box>
-
+        <Box mt={6} p={6} borderWidth="1px" borderRadius="lg" bg="gray.50">
+          <VStack align="start" spacing={6}>
+            <DetailSection
+              title="Research Interests"
+              content={researcher.research_interests}
+            />
             <Separator />
-
-            <Box>
-              <Text fontWeight="bold" color="black">
-                Research Scholars:
-              </Text>
-              <Text color="black" whiteSpace="pre-wrap">
-                {researcher.research_scholars}
-              </Text>
-            </Box>
-
+            <DetailSection
+              title="Research Scholars"
+              content={researcher.research_scholars}
+            />
             <Separator />
-
-            <Box>
-              <Text fontWeight="bold" color="black">
-                Projects:
-              </Text>
-              <Text color="black" whiteSpace="pre-wrap">
-                {researcher.projects}
-              </Text>
-            </Box>
-
+            <DetailSection title="Projects" content={researcher.projects} />
             <Separator />
-
-            <Box>
-              <Text fontWeight="bold" color="black">
-                Publications:
-              </Text>
-              <Text color="black" whiteSpace="pre-wrap">
-                {researcher.publications}
-              </Text>
-            </Box>
+            <DetailSection
+              title="Publications"
+              content={researcher.publications}
+            />
           </VStack>
         </Box>
       )}
     </Box>
   );
 };
+
+const DetailSection = ({ title, content }) => (
+  <Box>
+    <Text fontWeight="bold" fontSize="md" color="teal.700" mb={1}>
+      {title}:
+    </Text>
+    <Text fontSize="sm" color="gray.700" whiteSpace="pre-wrap">
+      {content || "No information available."}
+    </Text>
+  </Box>
+);
 
 export default ResearchersPage;
