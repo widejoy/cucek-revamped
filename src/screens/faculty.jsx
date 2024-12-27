@@ -71,7 +71,7 @@ const FacultyPage = () => {
       {/* Breadcrumb */}
       <BreadcrumbRoot separator={<LiaSlashSolid />}>
         <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        <BreadcrumbLink>Academics</BreadcrumbLink>
+        <BreadcrumbLink>People</BreadcrumbLink>
         <BreadcrumbCurrentLink color={"blackAlpha.600"}>
           Faculty
         </BreadcrumbCurrentLink>

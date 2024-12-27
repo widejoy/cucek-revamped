@@ -144,7 +144,7 @@ export default function Ce() {
     <AcademicsTemplate
       image="https://cucek.cusat.ac.in/img/civil/10.jpg"
       branchName="Civil Engineering"
-      subtitle="We are civil and we do engineering"
+      subtitle="civ"
       sectionContent={sectionContent}
       hodPhoto="https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/CE/FACULTY%20PICS/01.jpg"
       hodName={"Dr. Sunil Kumar N"}

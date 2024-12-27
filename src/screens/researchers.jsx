@@ -12,6 +12,12 @@ import {
   Badge,
   Spinner,
 } from "@chakra-ui/react";
+import { LiaSlashSolid } from "react-icons/lia";
+import {
+  BreadcrumbRoot,
+  BreadcrumbLink,
+  BreadcrumbCurrentLink,
+} from "../components/ui/breadcrumb";
 
 const ResearchersPage = () => {
   const [researchers, setResearchers] = useState([]);
@@ -53,6 +59,15 @@ const ResearchersPage = () => {
 
   return (
     <Box p={8} bg="gray.100" minH="100vh">
+      <BreadcrumbRoot separator={<LiaSlashSolid />}>
+        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        <BreadcrumbLink>Academics</BreadcrumbLink>
+        <BreadcrumbLink href="/research">Research</BreadcrumbLink>
+        <BreadcrumbCurrentLink color={"blackAlpha.600"}>
+          Researchers
+        </BreadcrumbCurrentLink>
+      </BreadcrumbRoot>
+
       <Heading as="h1" size="2xl" color="teal.600" textAlign="center" mb={10}>
         Meet Our Researchers
       </Heading>
@@ -102,16 +117,6 @@ const Details = ({ researcher }) => {
 
   return (
     <Box mt={4}>
-      <Button
-        size="sm"
-        colorScheme="teal"
-        variant={isExpanded ? "solid" : "outline"}
-        onClick={() => setIsExpanded(!isExpanded)}
-        color={"black"}
-      >
-        {isExpanded ? "Show Less" : "Read More"}
-      </Button>
-
       {isExpanded && (
         <Box mt={6} p={6} borderWidth="1px" borderRadius="lg" bg="gray.50">
           <VStack align="start" spacing={6}>
@@ -134,6 +139,15 @@ const Details = ({ researcher }) => {
           </VStack>
         </Box>
       )}
+      <Button
+        size="sm"
+        colorScheme="teal"
+        variant={isExpanded ? "solid" : "outline"}
+        onClick={() => setIsExpanded(!isExpanded)}
+        color={"black"}
+      >
+        {isExpanded ? "Show Less" : "Read More"}
+      </Button>
     </Box>
   );
 };

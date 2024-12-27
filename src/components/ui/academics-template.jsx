@@ -9,6 +9,12 @@ import {
   VStack,
   HStack,
 } from "@chakra-ui/react";
+import { LiaSlashSolid } from "react-icons/lia";
+import {
+  BreadcrumbCurrentLink,
+  BreadcrumbLink,
+  BreadcrumbRoot,
+} from "./breadcrumb";
 
 const AcademicsTemplate = ({
   image,
@@ -116,6 +122,15 @@ const AcademicsTemplate = ({
 
       {/* Sections Below */}
       <Box flex="1" bg="gray.50">
+        <Box marginTop={"20px"}>
+          <BreadcrumbRoot separator={<LiaSlashSolid />}>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbLink>Academics</BreadcrumbLink>
+            <BreadcrumbCurrentLink color={"blackAlpha.600"}>
+              {branchName}
+            </BreadcrumbCurrentLink>
+          </BreadcrumbRoot>
+        </Box>
         <Section
           ref={teamRef}
           id="team"

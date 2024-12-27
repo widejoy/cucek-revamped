@@ -10,6 +10,12 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
+import { LiaSlashSolid } from "react-icons/lia";
+import {
+  BreadcrumbRoot,
+  BreadcrumbLink,
+  BreadcrumbCurrentLink,
+} from "../components/ui/breadcrumb";
 
 import { Check } from "lucide-react";
 
@@ -17,6 +23,13 @@ const ResearchPage = () => {
   return (
     <Box bg="gray.50" p={8}>
       <Stack spacing={8} maxW="1200px" mx="auto">
+        <BreadcrumbRoot separator={<LiaSlashSolid />}>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink>Academics</BreadcrumbLink>
+          <BreadcrumbCurrentLink color={"blackAlpha.600"}>
+            Research
+          </BreadcrumbCurrentLink>
+        </BreadcrumbRoot>
         <Heading as="h1" size="2xl" textAlign="center" color="teal.500">
           Research at CUCEK
         </Heading>

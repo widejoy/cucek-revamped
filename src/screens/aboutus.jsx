@@ -9,6 +9,12 @@ import {
   Spacer,
   Container,
 } from "@chakra-ui/react";
+import {
+  BreadcrumbCurrentLink,
+  BreadcrumbLink,
+  BreadcrumbRoot,
+} from "../components/ui/breadcrumb";
+import { LiaSlashSolid } from "react-icons/lia";
 
 export default function AboutUsContents() {
   const sectionsContent = {
@@ -66,6 +72,12 @@ export default function AboutUsContents() {
       {/* Content Section */}
       <Container maxW="6xl" py={12} px={6}>
         <VStack spacing={12} align="start">
+          <BreadcrumbRoot separator={<LiaSlashSolid />}>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbCurrentLink color={"blackAlpha.600"}>
+              About Us
+            </BreadcrumbCurrentLink>
+          </BreadcrumbRoot>
           {/* Principal's Message */}
           <Flex
             ref={principalRef}
