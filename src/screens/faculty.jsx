@@ -9,6 +9,7 @@ import {
   Grid,
   GridItem,
   IconButton,
+  Spinner,
 } from "@chakra-ui/react";
 import { LiaSlashSolid } from "react-icons/lia";
 import { Search } from "lucide-react";
@@ -27,6 +28,7 @@ const FacultyPage = () => {
   const [filteredFaculty, setFilteredFaculty] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFaculty = async () => {
@@ -35,8 +37,10 @@ const FacultyPage = () => {
         const data = await response.json();
         setFacultyList(data);
         setFilteredFaculty(data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching faculty data:", error);
+        setLoading(false);
       }
     };
     fetchFaculty();
@@ -66,8 +70,10 @@ const FacultyPage = () => {
       {/* Breadcrumb */}
       <BreadcrumbRoot separator={<LiaSlashSolid />}>
         <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        <BreadcrumbLink href="/academics">Academics</BreadcrumbLink>
-        <BreadcrumbCurrentLink>Faculty</BreadcrumbCurrentLink>
+        <BreadcrumbLink>Academics</BreadcrumbLink>
+        <BreadcrumbCurrentLink color={"blackAlpha.600"}>
+          Faculty
+        </BreadcrumbCurrentLink>
       </BreadcrumbRoot>
 
       {/* Page Header */}
@@ -110,6 +116,38 @@ const FacultyPage = () => {
 
         {/* Main Content */}
         <VStack align="stretch" spacing={6} w="70%">
+          <Box bg="white" p={5} shadow="md" borderRadius="lg">
+            <Heading size="md" mb={2} color="teal.500">
+              Overview
+            </Heading>
+            <Text color="gray.700" fontSize="sm">
+              World-Class Educators
+              <br />
+              Working side by side with undergraduates, CUCEK professors
+              encourage students to see with new eyes. Through research,
+              coursework, and casual interactions, students and faculty learn
+              from and challenge each other on a daily basis.
+            </Text>
+          </Box>
+
+          {/* About the Faculty Section */}
+          <Box bg="white" p={5} shadow="md" borderRadius="lg">
+            <Heading size="md" mb={2} color="teal.500">
+              About the Faculty
+            </Heading>
+            <Text color="gray.700" fontSize="sm">
+              CUCEK students have immediate access to some of the world’s
+              greatest scholars. Accomplished researchers and educators lead
+              introductory courses and specialized classes. Faculty members are
+              deeply committed to students' success, providing guidance and
+              fostering a collaborative learning environment.
+              <br />
+              <br />
+              Learn about CUCEK faculty's diversity, climate, and history, or
+              explore individual faculty members' research and achievements.
+            </Text>
+          </Box>
+
           {/* Search Section */}
           <Box bg="white" p={5} borderRadius="lg" boxShadow="sm">
             <Heading size="lg" mb={3} color="teal.500">
@@ -134,14 +172,20 @@ const FacultyPage = () => {
             <Heading size="lg" mb={4} color="teal.500">
               Faculty
             </Heading>
-            <Grid
-              templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
-              gap={6}
-            >
-              {filteredFaculty.map((faculty) => (
-                <FacultyCard key={faculty.id} faculty={faculty} />
-              ))}
-            </Grid>
+            {loading ? (
+              <Spinner size="xl" color="teal.500" />
+            ) : filteredFaculty.length === 0 ? (
+              <Text color="gray.500">No results found</Text>
+            ) : (
+              <Grid
+                templateColumns="repeat(auto-fit, minmax(250px, 1fr))"
+                gap={6}
+              >
+                {filteredFaculty.map((faculty) => (
+                  <FacultyCard key={faculty.id} faculty={faculty} />
+                ))}
+              </Grid>
+            )}
           </Box>
         </VStack>
       </HStack>
