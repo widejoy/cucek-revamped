@@ -30,6 +30,10 @@ const Menu = () => {
         setBgImage("people.jpg");
         setSubmenuItems(["Faculty", "Non-Teaching Staff"]);
         break;
+      case "placement connect":
+        setBgImage("ey.png");
+        navigate("/placement connect");
+        break;
       case "Campus Life":
         setBgImage("campuslife.jpg");
         setSubmenuItems([
@@ -46,7 +50,7 @@ const Menu = () => {
         ]);
         break;
       case "Academics":
-        setBgImage("academics.jpg");
+        setBgImage("academics.jpg")
         setSubmenuItems([
           "CSE",
           "CE",
@@ -127,6 +131,7 @@ const Menu = () => {
             "Academics",
             "Alumni",
             "Login",
+            "placement connect"
           ].map((item, index) => (
             <Text
               key={index}
