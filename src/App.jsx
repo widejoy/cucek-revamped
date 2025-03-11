@@ -13,6 +13,7 @@ import ResearchersPage from "./screens/researchers";
 import PlacementCellPage from "./screens/PlacementCellPage";
 import NSSCellPage from "./screens/NSSCellPage";
 import FacultyPage from "./screens/faculty";
+import PlacementConnect from "./screens/PlacementConnect";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route element={<PlacementCellPage />} path="/placements" />
           <Route element={<NSSCellPage />} path="/nss-cell" />
           <Route element={<FacultyPage />} path="/faculty" />
+          <Route element={<PlacementConnect />} path="/placement-connect" />
         </Routes>
       </Box>
     </Box>

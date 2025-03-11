@@ -32,7 +32,7 @@ const Menu = () => {
         break;
       case "placement connect":
         setBgImage("ey.png");
-        navigate("/placement connect");
+        navigate("/placement-connect");
         break;
       case "Campus Life":
         setBgImage("campuslife.jpg");
