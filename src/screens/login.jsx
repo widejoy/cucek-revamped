@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -6,25 +6,43 @@ import {
   Heading,
   Text,
   IconButton,
-  Link,
 } from "@chakra-ui/react";
 import { Eye, EyeOff } from "lucide-react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      console.log("Logging in with", { email, password });
+    setErrorMessage("");
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/login/", {
+        email: email,
+        password: password,
+      });
+      console.log("Login successful", response.data);
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
+    } catch (err) {
+      // Extract a readable error message from the error object
+      const message =
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        err.message ||
+        "An error occurred during login";
+      setErrorMessage(message);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -41,7 +59,7 @@ const Login = () => {
         p={8}
         borderRadius="lg"
         boxShadow="lg"
-        w={{ base: "90%", sm: "500px" }} // Increased width
+        w={{ base: "90%", sm: "500px" }}
         textAlign="center"
       >
         <Heading mb={4} color="white" fontWeight="bold">
@@ -50,6 +68,11 @@ const Login = () => {
         <Text color="gray.300" fontSize="sm" mb={6}>
           Enter your credentials to access your account
         </Text>
+        {errorMessage && (
+          <Text color="red.400" mb={4}>
+            {errorMessage}
+          </Text>
+        )}
         <form onSubmit={handleSubmit}>
           <VStack spacing={6} align="stretch">
             <FormControl isRequired>
@@ -68,7 +91,7 @@ const Login = () => {
                   color="black"
                   py={8}
                   px={6}
-                  borderRadius="10px" // More rounded corners
+                  borderRadius="10px"
                   fontSize="lg"
                   width="500px"
                 />
@@ -91,9 +114,9 @@ const Login = () => {
                   color="black"
                   py={8}
                   px={6}
-                  borderRadius="10px" // More rounded corners
+                  borderRadius="10px"
                   fontSize="lg"
-                  width="500px" // Ensures full width
+                  width="500px"
                 />
                 <InputRightElement height="full" pr={4}>
                   <IconButton
@@ -102,18 +125,18 @@ const Login = () => {
                     icon={showPassword ? <EyeOff /> : <Eye />}
                     onClick={() => setShowPassword(!showPassword)}
                     fontSize="xl"
+                    zIndex={"20"}
                   />
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-
             <Button
               type="submit"
               colorScheme="blue"
               width="full"
               size="lg"
               isLoading={isLoading}
-              borderRadius="full" // Fully rounded button
+              borderRadius="full"
               mt={2}
               py={4}
             >
