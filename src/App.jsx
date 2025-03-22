@@ -16,6 +16,8 @@ import FacultyPage from "./screens/faculty";
 // import PlacementConnect from "./screens/PlacementConnect";
 import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
+import TeacherClasses from "./components/ui/teacherClasses";
+import ClassDetails from "./components/ui/classDetails";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
           {/* <Route element={<PlacementConnect />} path="/placement-connect" /> */}
           <Route element={<ChatBot />} path="chat" />
           <Route element={<Login />} path="/login" />
+          <Route element={<TeacherClasses />} path="/classes"/>
+          <Route element={<ClassDetails/>} path="/classes/:class_id"/>
         </Routes>
       </Box>
     </Box>
