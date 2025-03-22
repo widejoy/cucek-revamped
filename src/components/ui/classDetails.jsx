@@ -148,7 +148,7 @@ const ClassDetails = () => {
                 <div style={styles.header}>
                     <Heading as="h2" style={styles.title}>{classDetails.name}</Heading>
                     <Text style={styles.description}>{classDetails.description}</Text>
-                    <AddStudent />
+                    <AddStudent class_id={class_id} />
 
                     {loading && (
                         <div style={styles.loading}>
