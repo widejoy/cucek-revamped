@@ -32,6 +32,7 @@ const Login = () => {
       console.log("Login successful", response.data);
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
+      alert("login complete")
     } catch (err) {
       // Extract a readable error message from the error object
       const message =
