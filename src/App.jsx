@@ -15,7 +15,7 @@ import NSSCellPage from "./screens/NSSCellPage";
 import FacultyPage from "./screens/faculty";
 // import PlacementConnect from "./screens/PlacementConnect";
 import ChatBot from "./screens/Chatbot";
-
+import Login from "./screens/login";
 
 function App() {
   return (
@@ -37,6 +37,7 @@ function App() {
           <Route element={<FacultyPage />} path="/faculty" />
           {/* <Route element={<PlacementConnect />} path="/placement-connect" /> */}
           <Route element={<ChatBot />} path="chat" />
+          <Route element={<Login />} path="/login" />
         </Routes>
       </Box>
     </Box>
