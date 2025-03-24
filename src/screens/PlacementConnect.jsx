@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Box,
   Heading,
@@ -7,14 +7,16 @@ import {
   SimpleGrid,
   Button,
   Input,
-  useDisclosure,
+  useDisclosure
+} from "@chakra-ui/react";
+import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-} from "@chakra-ui/react";
+  ModalFooter
+} from "@chakra-ui/modal";
 
 const companies = [
   { name: "Google", minGPA: 8.0 },

@@ -11,9 +11,9 @@ import It from "./screens/it";
 import ResearchPage from "./screens/research";
 import ResearchersPage from "./screens/researchers";
 import PlacementCellPage from "./screens/PlacementCellPage";
+import PlacementConnect from "./screens/PlacementConnect";
 import NSSCellPage from "./screens/NSSCellPage";
 import FacultyPage from "./screens/faculty";
-// import PlacementConnect from "./screens/PlacementConnect";
 import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
 
@@ -33,9 +33,9 @@ function App() {
           <Route element={<ResearchPage />} path="/research" />
           <Route element={<ResearchersPage />} path="/researchers" />
           <Route element={<PlacementCellPage />} path="/placements" />
+          <Route element={<PlacementConnect />} path="/placement-connect" />
           <Route element={<NSSCellPage />} path="/nss-cell" />
           <Route element={<FacultyPage />} path="/faculty" />
-          {/* <Route element={<PlacementConnect />} path="/placement-connect" /> */}
           <Route element={<ChatBot />} path="chat" />
           <Route element={<Login />} path="/login" />
         </Routes>
