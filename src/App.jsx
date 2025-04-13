@@ -18,6 +18,8 @@ import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
 import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
+import CompletePlacementProfile from "./screens/CompletePlacementProfile";
+import Tour from "./screens/Tour";
 
 function App() {
   return (
@@ -36,12 +38,14 @@ function App() {
           <Route element={<ResearchersPage />} path="/researchers" />
           <Route element={<PlacementCellPage />} path="/placements" />
           <Route element={<PlacementConnect />} path="/placement-connect" />
+          <Route element={<CompletePlacementProfile />} path="/placement-profile" />
           <Route element={<NSSCellPage />} path="/nss-cell" />
           <Route element={<FacultyPage />} path="/faculty" />
           <Route element={<ChatBot />} path="chat" />
           <Route element={<Login />} path="/login" />
           <Route element={<TeacherClasses />} path="/classes"/>
           <Route element={<ClassDetails/>} path="/classes/:class_id"/>
+          <Route element={<Tour/>} path="/tour"/>
         </Routes>
       </Box>
     </Box>
