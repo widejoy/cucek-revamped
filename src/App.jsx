@@ -20,7 +20,6 @@ import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
 import CompletePlacementProfile from "./screens/CompletePlacementProfile";
 import Tour from "./screens/Tour";
-
 function App() {
   return (
     <Box bg="white" minH="100vh">
