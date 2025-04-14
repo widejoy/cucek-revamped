@@ -1,235 +1,169 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button, Box, Heading, Text } from '@chakra-ui/react';
-import AddStudent from './addStudent';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Button, Box, Heading, Text } from "@chakra-ui/react";
+import AddStudent from "./addStudent";
 
 const ClassDetails = () => {
-    const { class_id } = useParams(); // Get the class ID from the URL
-    const [studentDetails, setStudentDetails] = useState([]); // State to store student details
-    const [subjectDetails, setSubjectDetails] = useState([]); // State to store subject details
-    const [error, setError] = useState(null); // Error state
-    const [loading, setLoading] = useState(true); // Loading state
-    const [classDetails, setClassDetails] = useState({});
+  const { class_id } = useParams();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchClassDetails = async () => {
-            const url = `http://localhost:8000/api/class/${class_id}/details/`; // Fetch URL for specific class details
-            const options = {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-            };
+  const [studentDetails, setStudentDetails] = useState([]);
+  const [subjectDetails, setSubjectDetails] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [classDetails, setClassDetails] = useState({});
 
-            try {
-                setLoading(true); // Set loading to true while fetching data
+  useEffect(() => {
+    const fetchClassDetails = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:8000/api/class/${class_id}/details/`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
 
-                const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
 
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
-                }
+        const data = await response.json();
 
-                const data = await response.json();
+        if (data?.students && data?.class) {
+          setStudentDetails(data.students);
+          setClassDetails(data.class);
+        }
 
-                if (data && data.students && data.class) {
-                    setStudentDetails(data.students);
-                    setClassDetails(data.class);
-                } else {
-                    setError('Unexpected response structure for students');
-                }
-
-                if (data.subjects) {
-                    setSubjectDetails(data.subjects); // Update subjects data
-                } else {
-                    setError('Unexpected response structure for subjects');
-                }
-            } catch (error) {
-                setError(error.message); // Set error state
-            } finally {
-                setLoading(false); // Set loading to false once fetch is complete
-            }
-        };
-
-        fetchClassDetails(); // Call the fetch function when the component mounts
-    }, [class_id]); // Depend on class_id to refetch when the ID changes
-
-    // Styles for the tables and other elements
-    const styles = {
-        container: {
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '40px',
-            backgroundColor: '#2D3748',
-            borderRadius: '12px',
-            boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)',
-            height: 'auto',
-            color: '#E2E8F0',
-        },
-        header: {
-            textAlign: 'center',
-            marginBottom: '30px',
-        },
-        title: {
-            color: '#E2E8F0',
-            fontSize: '3.5rem',
-            fontWeight: '700',
-            marginBottom: '10px',
-            letterSpacing: '1px',
-            textTransform: 'uppercase',
-            textShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
-        },
-        description: {
-            color: '#A0AEC0',
-            fontSize: '1.2rem',
-            marginBottom: '30px',
-        },
-        loading: {
-            marginTop: '20px',
-        },
-        spinner: {
-            border: '4px solid rgba(255, 255, 255, 0.3)',
-            borderTop: '4px solid #3182ce',
-            borderRadius: '50%',
-            width: '60px',
-            height: '60px',
-            animation: 'spin 1.5s linear infinite',
-        },
-        errorMessage: {
-            color: 'red',
-            fontSize: '1.2rem',
-            textAlign: 'center',
-            marginBottom: '30px',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-        },
-        table: {
-            width: '100%',
-            borderCollapse: 'collapse',
-            marginTop: '30px',
-            borderRadius: '8px',
-            overflow: 'hidden',
-        },
-        th: {
-            padding: '15px',
-            backgroundColor: '#4A5568',
-            color: '#E2E8F0',
-            textAlign: 'left',
-            fontSize: '1.1rem',
-            fontWeight: '600',
-        },
-        td: {
-            padding: '15px',
-            borderBottom: '1px solid #2D3748',
-            color: '#E2E8F0',
-            fontSize: '1rem',
-        },
-        tableHeader: {
-            fontSize: '1.5rem',
-            fontWeight: '700',
-            padding: '15px',
-            color: '#E2E8F0',
-            textAlign: 'center',
-            backgroundColor: '#2D3748',
-        },
-        tableRow: {
-            transition: 'background-color 0.3s ease',
-        },
-        tableRowHover: {
-            backgroundColor: '#4A5568',
-        },
+        if (data?.subjects) {
+          setSubjectDetails(data.subjects);
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Keyframes for spinner animation
-    const keyframes = `
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-  `;
+    fetchClassDetails();
+  }, [class_id]);
 
-    return (
-        <>
-            <style>{keyframes}</style> 
-            <div style={styles.container}>
-                <div style={styles.header}>
-                    <Heading as="h2" style={styles.title}>{classDetails.name}</Heading>
-                    <Text style={styles.description}>{classDetails.description}</Text>
-                    <AddStudent class_id={class_id} />
+  const handleViewResults = (subjectId) => {
+    navigate(`/classes/${class_id}/subject/${subjectId}/results/${subjectId}`);
+  };
 
-                    {loading && (
-                        <div style={styles.loading}>
-                            <div style={styles.spinner}></div>
-                        </div>
-                    )}
-                </div>
+  return (
+    <Box
+      maxW="1200px"
+      mx="auto"
+      p={6}
+      bg="gray.800"
+      borderRadius="lg"
+      color="white"
+    >
+      <Heading mb={2} textAlign="center">
+        {classDetails.name}
+      </Heading>
+      <Text mb={6} textAlign="center" color="gray.300">
+        {classDetails.description}
+      </Text>
 
-                {error ? (
-                    <div style={styles.errorMessage}>{error}</div>
-                ) : (
-                    <>
-                        {/* Table for student data */}
-                        <table style={styles.table}>
-                            <thead>
-                                <tr style={styles.tableHeader}>
-                                    <th style={styles.th}>Username</th>
-                                    <th style={styles.th}>Email</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {studentDetails.length > 0 ? (
-                                    studentDetails.map((student, index) => (
-                                        <tr
-                                            key={index}
-                                            style={styles.tableRow}
-                                            onMouseEnter={(e) => e.target.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
-                                        >
-                                            <td style={styles.td}>{student.username}</td>
-                                            <td style={styles.td}>{student.email}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="2" style={styles.td}>No students found.</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+      <AddStudent class_id={class_id} />
 
-                        {/* Table for subject data */}
-                        <table style={styles.table}>
-                            <thead>
-                                <tr style={styles.tableHeader}>
-                                    <th style={styles.th}>Subject Name</th>
-                                    <th style={styles.th}>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {subjectDetails.length > 0 ? (
-                                    subjectDetails.map((subject, index) => (
-                                        <tr
-                                            key={index}
-                                            style={styles.tableRow}
-                                            onMouseEnter={(e) => e.target.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
-                                        >
-                                            <td style={styles.td}>{subject.name}</td>
-                                            <td style={styles.td}>{subject.description}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="2" style={styles.td}>No subjects found.</td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </>
-                )}
-            </div>
-        </>
-    );
+      {loading && <Text mt={4}>Loading...</Text>}
+      {error && <Text color="red.400">{error}</Text>}
+
+      {/* Student Table */}
+      <Box mt={8}>
+        <Heading size="md" mb={4}>
+          Students
+        </Heading>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead style={{ background: "#2D3748" }}>
+            <tr>
+              <th style={thStyle}>Username</th>
+              <th style={thStyle}>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {studentDetails.length > 0 ? (
+              studentDetails.map((student, idx) => (
+                <tr key={idx} style={rowStyle}>
+                  <td style={tdStyle}>{student.username}</td>
+                  <td style={tdStyle}>{student.email}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td style={tdStyle} colSpan="2">
+                  No students found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </Box>
+
+      {/* Subjects Table */}
+      <Box mt={8}>
+        <Heading size="md" mb={4}>
+          Subjects
+        </Heading>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <thead style={{ background: "#2D3748" }}>
+            <tr>
+              <th style={thStyle}>Name</th>
+              <th style={thStyle}>Description</th>
+              <th style={thStyle}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subjectDetails.length > 0 ? (
+              subjectDetails.map((subject, idx) => (
+                <tr key={idx} style={rowStyle}>
+                  <td style={tdStyle}>{subject.name}</td>
+                  <td style={tdStyle}>{subject.description}</td>
+                  <td style={tdStyle}>
+                    <Button
+                      colorScheme="blue"
+                      size="sm"
+                      onClick={() => handleViewResults(subject.id)}
+                    >
+                      View Results
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td style={tdStyle} colSpan="3">
+                  No subjects found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </Box>
+    </Box>
+  );
+};
+
+const thStyle = {
+  padding: "12px",
+  textAlign: "left",
+  color: "#E2E8F0",
+};
+
+const tdStyle = {
+  padding: "10px",
+  borderBottom: "1px solid #444",
+};
+
+const rowStyle = {
+  transition: "background 0.2s ease-in-out",
 };
 
 export default ClassDetails;
