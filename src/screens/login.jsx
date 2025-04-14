@@ -11,6 +11,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +34,7 @@ const Login = () => {
       console.log("Login successful", response.data);
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
-      alert("login complete")
+      alert("login complete");
     } catch (err) {
       // Extract a readable error message from the error object
       const message =
@@ -43,6 +45,7 @@ const Login = () => {
       setErrorMessage(message);
     } finally {
       setIsLoading(false);
+      navigate("/");
     }
   };
 

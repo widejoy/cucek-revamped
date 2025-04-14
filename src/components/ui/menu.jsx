@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
 import { useNavStore } from "../../store/globalState";
+import { sub } from "framer-motion/client";
 
 const Menu = () => {
   const [bgImage, setBgImage] = useState(""); // State for the background image
@@ -28,10 +29,10 @@ const Menu = () => {
         break;
       case "People":
         setBgImage("people.jpg");
-        setSubmenuItems(["Faculty", "Non-Teaching Staff"]);
+        setSubmenuItems(["Faculty"]);
         break;
-      case "placement connect":
-        setBgImage("ey.png");
+      case "Placement  Connect":
+        closeMenu();
         navigate("/placement-connect");
         break;
       case "Campus Life":
@@ -50,7 +51,7 @@ const Menu = () => {
         ]);
         break;
       case "Academics":
-        setBgImage("academics.jpg")
+        setBgImage("academics.jpg");
         setSubmenuItems([
           "CSE",
           "CE",
@@ -131,7 +132,7 @@ const Menu = () => {
             "Academics",
             "Alumni",
             "Login",
-            "placement connect"
+            "PlacementConnect",
           ].map((item, index) => (
             <Text
               key={index}
@@ -153,7 +154,6 @@ const Menu = () => {
         </VStack>
 
         {/* Submenu */}
-
         {submenuItems.length > 0 && (
           <VStack spacing={4} align="flex-start" flex="2" pl={6}>
             {submenuItems.map((subitem, index) => (
@@ -169,8 +169,30 @@ const Menu = () => {
                 cursor="pointer"
                 transition="all 0.3s ease-in-out"
                 onClick={() => {
-                  closeMenu(); // Close the menu
-                  navigate(`/${subitem.toLowerCase().replace(/\s+/g, "-")}`); // Navigate to /name-of-submenu
+                  closeMenu();
+                  if (subitem === "Anti Ragging Cell") {
+                    window.open(
+                      "https://cucek.cusat.ac.in/files/antiragging.pdf",
+                      "_blank"
+                    );
+                  } else if (subitem === "Grievance Redressal Cells") {
+                    window.open(
+                      "https://cucek.cusat.ac.in/files/internal_complaints.pdf",
+                      "_blank"
+                    );
+                  } else if (subitem === "Co-Teaching Committees") {
+                    window.open(
+                      "https://cucek.cusat.ac.in/files/ctc.pdf",
+                      "_blank"
+                    );
+                  } else if (subitem == "Gender Justice Committee") {
+                    window.open(
+                      "https://cucek.cusat.ac.in/files/gender_justice.pdf",
+                      "_blank"
+                    );
+                  } else {
+                    navigate(`/${subitem.toLowerCase().replace(/\s+/g, "-")}`);
+                  }
                 }}
               >
                 {subitem}

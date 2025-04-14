@@ -11,17 +11,20 @@ import It from "./screens/it";
 import ResearchPage from "./screens/research";
 import ResearchersPage from "./screens/researchers";
 import PlacementCellPage from "./screens/PlacementCellPage";
+import PlacementConnect from "./screens/PlacementConnect";
 import NSSCellPage from "./screens/NSSCellPage";
 import FacultyPage from "./screens/faculty";
-// import PlacementConnect from "./screens/PlacementConnect";
 import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
 import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
-
+import CompletePlacementProfile from "./screens/CompletePlacementProfile";
+import Hostels from "./screens/Hostels";
+import ArtsAndSports from "./screens/artsAndSports";
+import Library from "./screens/library";
 function App() {
   return (
-    <Box bg="white" minH="100vh">
+    <Box bg="white" textc minH="100vh">
       <GlobalAppBar />
       <Box as="main">
         <Routes>
@@ -35,13 +38,20 @@ function App() {
           <Route element={<ResearchPage />} path="/research" />
           <Route element={<ResearchersPage />} path="/researchers" />
           <Route element={<PlacementCellPage />} path="/placements" />
+          <Route element={<PlacementConnect />} path="/placement-connect" />
+          <Route
+            element={<CompletePlacementProfile />}
+            path="/placement-profile"
+          />
           <Route element={<NSSCellPage />} path="/nss-cell" />
+          <Route element={<Hostels />} path="/hostels" />
           <Route element={<FacultyPage />} path="/faculty" />
-          {/* <Route element={<PlacementConnect />} path="/placement-connect" /> */}
           <Route element={<ChatBot />} path="chat" />
           <Route element={<Login />} path="/login" />
-          <Route element={<TeacherClasses />} path="/classes"/>
-          <Route element={<ClassDetails/>} path="/classes/:class_id"/>
+          <Route element={<TeacherClasses />} path="/classes" />
+          <Route element={<ClassDetails />} path="/classes/:class_id" />
+          <Route element={<ArtsAndSports />} path="/arts-and-sports" />
+          <Route element={<Library />} path="/library" />
         </Routes>
       </Box>
     </Box>

@@ -1,4 +1,3 @@
-import React from "react";
 import AcademicsTemplate from "../components/ui/academics-template";
 
 export default function Cs() {
