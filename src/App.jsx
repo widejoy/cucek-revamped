@@ -22,6 +22,11 @@ import CompletePlacementProfile from "./screens/CompletePlacementProfile";
 import Hostels from "./screens/Hostels";
 import ArtsAndSports from "./screens/artsAndSports";
 import Library from "./screens/library";
+import Tour from "./screens/Tour";
+import PlacementCompanies from "./screens/PlacementCompanies";
+import AddCompany from "./screens/AddCompany";
+import PlacementAdmin from "./screens/PlacementAdmin";
+
 function App() {
   return (
     <Box bg="white" textc minH="100vh">
@@ -52,6 +57,10 @@ function App() {
           <Route element={<ClassDetails />} path="/classes/:class_id" />
           <Route element={<ArtsAndSports />} path="/arts-and-sports" />
           <Route element={<Library />} path="/library" />
+          <Route element={<Tour/>} path="/tour"/>
+          <Route element={<PlacementCompanies/>} path="/placement-application"/>
+          <Route element={<AddCompany />} path="/add-company"/>
+          <Route element={<PlacementAdmin />} path="/companies"/>
         </Routes>
       </Box>
     </Box>
