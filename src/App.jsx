@@ -18,6 +18,7 @@ import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
 import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
+import CompletePlacementProfile from "./screens/CompletePlacementProfile";
 import Hostels from "./screens/Hostels";
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
           <Route element={<ResearchersPage />} path="/researchers" />
           <Route element={<PlacementCellPage />} path="/placements" />
           <Route element={<PlacementConnect />} path="/placement-connect" />
+          <Route
+            element={<CompletePlacementProfile />}
+            path="/placement-profile"
+          />
           <Route element={<NSSCellPage />} path="/nss-cell" />
           <Route element={<Hostels />} path="/hostels" />
           <Route element={<FacultyPage />} path="/faculty" />

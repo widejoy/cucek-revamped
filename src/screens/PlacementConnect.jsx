@@ -1,112 +1,94 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
+
+
 import {
   Box,
-  Heading,
-  Text,
-  VStack,
-  SimpleGrid,
-  Button,
-  Input,
-  useDisclosure
+  Badge,
+  Text
 } from "@chakra-ui/react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from "@chakra-ui/modal";
 
-const companies = [
-  { name: "Google", minGPA: 8.0 },
-  { name: "Microsoft", minGPA: 7.5 },
-  { name: "Amazon", minGPA: 7.0 },
-  { name: "TCS", minGPA: 6.0 },
-  { name: "Infosys", minGPA: 6.5 },
-];
 
-const PlacementConnect = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [gpa, setGpa] = useState("");
-  const [eligibleCompanies, setEligibleCompanies] = useState([]);
+function PlacementConnect() {
+  
+  const [profile,setProfile] = useState({})
 
-  const handleCheckEligibility = () => {
-    const userGpa = parseFloat(gpa);
-    if (!userGpa || userGpa < 0 || userGpa > 10) {
-      alert("Please enter a valid GPA between 0 and 10.");
-      return;
+  const fetchPlacementProfile = async () => {
+    const url = 'http://127.0.0.1:8000/api/placement/profile/';
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        'content-type': 'application/json'
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      return [data, response.status]
+    } catch (error) {
+      console.error(error);
+      return [null, "401"]
     }
-    const filteredCompanies = companies.filter((c) => userGpa >= c.minGPA);
-    setEligibleCompanies(filteredCompanies);
-    onClose();
-  };
+  }
+
+  useEffect(
+    () => {
+      fetchPlacementProfile()
+        .then(([data, status]) => {
+          if(status == 200) {
+            setProfile(data)
+          }
+          else if(status == 404) {
+            alert("Create profile")
+          }
+        })
+    }, []
+
+
+
+  )
+
 
   return (
-    <Box textAlign="center" p={8}>
-      <Heading as="h1" size="2xl" color="blue.700" mb={4}>
-        Placement Connect
-      </Heading>
-      <Text fontSize="lg" color="gray.600" mb={6}>
-        Enter your GPA to see eligible companies.
+    <Box
+      p="6"
+      borderRadius="md"
+      maxW="400px"
+      mx="auto"
+      mt="8"
+      bg="#f0f4f8"
+      color="#2a4365"
+      boxShadow="md"
+    >
+      <Text fontSize="2xl" fontWeight="bold" mb="4">
+        My Profile
       </Text>
-      <Button colorScheme="blue" size="lg" onClick={onOpen}>
-        Enter GPA
-      </Button>
 
-      {/* GPA Input Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Enter Your GPA</ModalHeader>
-          <ModalBody>
-            <Input
-              type="number"
-              placeholder="Enter GPA"
-              value={gpa}
-              onChange={(e) => setGpa(e.target.value)}
-              step="0.1"
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={handleCheckEligibility}>
-              Submit
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* Eligible Companies Display */}
-      {eligibleCompanies.length > 0 && (
-        <Box mt={8}>
-          <Heading as="h2" size="lg" color="blue.700" mb={4}>
-            Eligible Companies
-          </Heading>
-          <SimpleGrid columns={[1, 2, 3]} spacing={6}>
-            {eligibleCompanies.map((company, index) => (
-              <Box
-                key={index}
-                p={6}
-                bg="white"
-                boxShadow="lg"
-                borderRadius="lg"
-                textAlign="center"
-                transition="transform 0.2s"
-                _hover={{ transform: "scale(1.05)", boxShadow: "xl" }}
-              >
-                <Text fontSize="xl" fontWeight="bold" color="blue.800">
-                  {company.name}
-                </Text>
-                <Text fontSize="sm" color="gray.600">
-                  Minimum GPA: {company.minGPA}
-                </Text>
-              </Box>
-            ))}
-          </SimpleGrid>
-        </Box>
+      {profile.is_placement_coordinator && (
+        <Badge
+          colorScheme="purple"
+          mb="4"
+          fontSize="0.9em"
+          px="2"
+          py="1"
+          borderRadius="md"
+        >
+          Placement Coordinator
+        </Badge>
       )}
+
+      <Text mb="2">
+        <strong>CGPA:</strong> {profile.cgpa}
+      </Text>
+      <Text mb="2">
+        <strong>10th Percentage:</strong> {profile.percentage_10th}%
+      </Text>
+      <Text mb="2">
+        <strong>12th Percentage:</strong> {profile.percentage_12th}%
+      </Text>
     </Box>
   );
 };
 
-export default PlacementConnect;
+export default PlacementConnect
