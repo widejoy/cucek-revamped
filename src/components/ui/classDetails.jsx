@@ -6,13 +6,14 @@ import AddStudent from './addStudent';
 const ClassDetails = () => {
     const { class_id } = useParams(); // Get the class ID from the URL
     const [studentDetails, setStudentDetails] = useState([]); // State to store student details
+    const [subjectDetails, setSubjectDetails] = useState([]); // State to store subject details
     const [error, setError] = useState(null); // Error state
     const [loading, setLoading] = useState(true); // Loading state
     const [classDetails, setClassDetails] = useState({});
 
     useEffect(() => {
-        const fetchStudentDetails = async () => {
-            const url = `http://localhost:8000/api/class/${class_id}/details/`; // Fetch URL for specific student by class_id
+        const fetchClassDetails = async () => {
+            const url = `http://localhost:8000/api/class/${class_id}/details/`; // Fetch URL for specific class details
             const options = {
                 method: 'GET',
                 headers: {
@@ -35,7 +36,13 @@ const ClassDetails = () => {
                     setStudentDetails(data.students);
                     setClassDetails(data.class);
                 } else {
-                    setError('Unexpected response structure');
+                    setError('Unexpected response structure for students');
+                }
+
+                if (data.subjects) {
+                    setSubjectDetails(data.subjects); // Update subjects data
+                } else {
+                    setError('Unexpected response structure for subjects');
                 }
             } catch (error) {
                 setError(error.message); // Set error state
@@ -44,10 +51,10 @@ const ClassDetails = () => {
             }
         };
 
-        fetchStudentDetails(); // Call the fetch function when the component mounts
+        fetchClassDetails(); // Call the fetch function when the component mounts
     }, [class_id]); // Depend on class_id to refetch when the ID changes
 
-    // Styles with a sleek, professional design
+    // Styles for the tables and other elements
     const styles = {
         container: {
             maxWidth: '1200px',
@@ -160,33 +167,65 @@ const ClassDetails = () => {
                 {error ? (
                     <div style={styles.errorMessage}>{error}</div>
                 ) : (
-                    <table style={styles.table}>
-                        <thead>
-                            <tr style={styles.tableHeader}>
-                                <th style={styles.th}>Username</th>
-                                <th style={styles.th}>Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {studentDetails.length > 0 ? (
-                                studentDetails.map((student, index) => (
-                                    <tr
-                                        key={index}
-                                        style={styles.tableRow}
-                                        onMouseEnter={(e) => e.target.style.backgroundColor = styles.tableRowHover.backgroundColor}
-                                        onMouseLeave={(e) => e.target.style.backgroundColor = ''}
-                                    >
-                                        <td style={styles.td}>{student.username}</td>
-                                        <td style={styles.td}>{student.email}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="2" style={styles.td}>No students found.</td>
+                    <>
+                        {/* Table for student data */}
+                        <table style={styles.table}>
+                            <thead>
+                                <tr style={styles.tableHeader}>
+                                    <th style={styles.th}>Username</th>
+                                    <th style={styles.th}>Email</th>
                                 </tr>
-                            )}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {studentDetails.length > 0 ? (
+                                    studentDetails.map((student, index) => (
+                                        <tr
+                                            key={index}
+                                            style={styles.tableRow}
+                                            onMouseEnter={(e) => e.target.style.backgroundColor = styles.tableRowHover.backgroundColor}
+                                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                                        >
+                                            <td style={styles.td}>{student.username}</td>
+                                            <td style={styles.td}>{student.email}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="2" style={styles.td}>No students found.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+
+                        {/* Table for subject data */}
+                        <table style={styles.table}>
+                            <thead>
+                                <tr style={styles.tableHeader}>
+                                    <th style={styles.th}>Subject Name</th>
+                                    <th style={styles.th}>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {subjectDetails.length > 0 ? (
+                                    subjectDetails.map((subject, index) => (
+                                        <tr
+                                            key={index}
+                                            style={styles.tableRow}
+                                            onMouseEnter={(e) => e.target.style.backgroundColor = styles.tableRowHover.backgroundColor}
+                                            onMouseLeave={(e) => e.target.style.backgroundColor = ''}
+                                        >
+                                            <td style={styles.td}>{subject.name}</td>
+                                            <td style={styles.td}>{subject.description}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="2" style={styles.td}>No subjects found.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </>
                 )}
             </div>
         </>
