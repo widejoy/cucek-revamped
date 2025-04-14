@@ -24,6 +24,8 @@ import ArtsAndSports from "./screens/artsAndSports";
 import Library from "./screens/library";
 import Tour from "./screens/Tour";
 import PlacementCompanies from "./screens/PlacementCompanies";
+import AddCompany from "./screens/AddCompany";
+import PlacementAdmin from "./screens/PlacementAdmin";
 
 function App() {
   return (
@@ -57,6 +59,8 @@ function App() {
           <Route element={<Library />} path="/library" />
           <Route element={<Tour/>} path="/tour"/>
           <Route element={<PlacementCompanies/>} path="/placement-application"/>
+          <Route element={<AddCompany />} path="/add-company"/>
+          <Route element={<PlacementAdmin />} path="/companies"/>
         </Routes>
       </Box>
     </Box>
