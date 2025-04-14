@@ -1,17 +1,11 @@
-import React from 'react';
 import {
   Box,
   Heading,
   Text,
-  VStack,
-  HStack,
-  Button,
   Image,
   SimpleGrid,
   Container,
-
-} from '@chakra-ui/react';
-import { Mail, Phone, MapPin, ArrowRightCircle } from 'lucide-react';
+} from "@chakra-ui/react";
 
 const NSSCellPage = () => {
   return (
@@ -29,37 +23,35 @@ const NSSCellPage = () => {
           NSS-CUCEK
         </Heading>
         <Text fontSize="lg" color="gray.600" maxW="3xl" mx="auto">
-          Empowering students to make meaningful contributions to society through service, sustainability, and community engagement.
+          Empowering students to make meaningful contributions to society
+          through service, sustainability, and community engagement.
         </Text>
       </Box>
 
       {/* About NSS Section */}
       <Box mb={16}>
-        <Heading
-          as="h2"
-          size="lg"
-          mb={6}
-          textAlign="center"
-          color="blue.700"
-        >
+        <Heading as="h2" size="lg" mb={6} textAlign="center" color="blue.700">
           About NSS
         </Heading>
-        <Text fontSize="md" color="gray.700" textAlign="justify" lineHeight="1.8" px={[4, 0]}>
-          The National Service Scheme (NSS) is a permanent youth programme under the Ministry of Youth Affairs and Sports, Government of India. Launched on 24th September 1969, its motto ‘Not Me But You’ reflects the essence of democratic living and the need for selfless service. NSS fosters empathy, community service, and social change, symbolized by its iconic logo inspired by the Konark Sun Temple's Rath Wheel.
+        <Text
+          fontSize="md"
+          color="gray.700"
+          textAlign="justify"
+          lineHeight="1.8"
+          px={[4, 0]}
+        >
+          The National Service Scheme (NSS) is a permanent youth programme under
+          the Ministry of Youth Affairs and Sports, Government of India.
+          Launched on 24th September 1969, its motto ‘Not Me But You’ reflects
+          the essence of democratic living and the need for selfless service.
+          NSS fosters empathy, community service, and social change, symbolized
+          by its iconic logo inspired by the Konark Sun Temple's Rath Wheel.
         </Text>
       </Box>
 
-
-
       {/* Activities Section */}
       <Box mb={16}>
-        <Heading
-          as="h2"
-          size="lg"
-          mb={6}
-          textAlign="center"
-          color="blue.700"
-        >
+        <Heading as="h2" size="lg" mb={6} textAlign="center" color="blue.700">
           Our Activities
         </Heading>
         <SimpleGrid columns={[1, 2, 3]} spacing={10}>
@@ -69,17 +61,9 @@ const NSSCellPage = () => {
         </SimpleGrid>
       </Box>
 
-
-
       {/* Coordinator Section */}
       <Box mb={16}>
-        <Heading
-          as="h2"
-          size="lg"
-          mb={6}
-          textAlign="center"
-          color="blue.700"
-        >
+        <Heading as="h2" size="lg" mb={6} textAlign="center" color="blue.700">
           Our Coordinators
         </Heading>
         <SimpleGrid columns={[1, 2, 3]} spacing={8}>
@@ -88,7 +72,6 @@ const NSSCellPage = () => {
           ))}
         </SimpleGrid>
       </Box>
-
     </Container>
   );
 };
@@ -102,7 +85,7 @@ const ActivityCard = ({ title, description, imageUrl }) => {
       bg="white"
       boxShadow="lg"
       transition="transform 0.2s"
-      _hover={{ transform: 'scale(1.05)', boxShadow: 'xl' }}
+      _hover={{ transform: "scale(1.05)", boxShadow: "xl" }}
     >
       <Image
         src={imageUrl}
@@ -124,33 +107,35 @@ const ActivityCard = ({ title, description, imageUrl }) => {
 };
 const coordinators = [
   {
-    name: 'Dr.Shiyas C R',
-    designation: 'NSS Program Officer',
-    imageUrl: 'coordinator1.jpeg',
+    name: "Dr.Shiyas C R",
+    designation: "NSS Program Officer",
+    imageUrl: "coordinator1.jpeg",
   },
   {
-    name: 'Jabir K V T',
-    designation: 'NSS Program Officer',
-    imageUrl: 'coordinator1.jpeg',
+    name: "Jabir K V T",
+    designation: "NSS Program Officer",
+    imageUrl: "coordinator1.jpeg",
   },
   // Add more coordinators as needed
 ];
 
 const activities = [
   {
-    title: 'Community Service',
-    description: 'Engaging in various community development programs across Kerala.',
-    imageUrl: 'nss_commun.jpeg',
+    title: "Community Service",
+    description:
+      "Engaging in various community development programs across Kerala.",
+    imageUrl: "nss_commun.jpeg",
   },
   {
-    title: 'Environmental Awareness',
-    description: 'Organizing campaigns to promote environmental sustainability.',
-    imageUrl: 'nss_env.jpeg',
+    title: "Environmental Awareness",
+    description:
+      "Organizing campaigns to promote environmental sustainability.",
+    imageUrl: "nss_env.jpeg",
   },
   {
-    title: 'Health Camps',
-    description: 'Conducting health check-up camps in rural areas.',
-    imageUrl: 'nss_health.jpeg',
+    title: "Health Camps",
+    description: "Conducting health check-up camps in rural areas.",
+    imageUrl: "nss_health.jpeg",
   },
   // Add more activities as needed
 ];
@@ -164,7 +149,7 @@ const CoordinatorCard = ({ name, designation, imageUrl }) => {
       bg="white"
       boxShadow="lg"
       transition="transform 0.2s"
-      _hover={{ transform: 'scale(1.05)', boxShadow: 'xl' }}
+      _hover={{ transform: "scale(1.05)", boxShadow: "xl" }}
     >
       <Image
         src={imageUrl}
@@ -184,6 +169,5 @@ const CoordinatorCard = ({ name, designation, imageUrl }) => {
     </Box>
   );
 };
-
 
 export default NSSCellPage;

@@ -18,10 +18,11 @@ import ChatBot from "./screens/Chatbot";
 import Login from "./screens/login";
 import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
+import Hostels from "./screens/Hostels";
 
 function App() {
   return (
-    <Box bg="white" minH="100vh">
+    <Box bg="white" textc minH="100vh">
       <GlobalAppBar />
       <Box as="main">
         <Routes>
@@ -37,11 +38,12 @@ function App() {
           <Route element={<PlacementCellPage />} path="/placements" />
           <Route element={<PlacementConnect />} path="/placement-connect" />
           <Route element={<NSSCellPage />} path="/nss-cell" />
+          <Route element={<Hostels />} path="/hostels" />
           <Route element={<FacultyPage />} path="/faculty" />
           <Route element={<ChatBot />} path="chat" />
           <Route element={<Login />} path="/login" />
-          <Route element={<TeacherClasses />} path="/classes"/>
-          <Route element={<ClassDetails/>} path="/classes/:class_id"/>
+          <Route element={<TeacherClasses />} path="/classes" />
+          <Route element={<ClassDetails />} path="/classes/:class_id" />
         </Routes>
       </Box>
     </Box>
