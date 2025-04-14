@@ -22,7 +22,6 @@ import CompletePlacementProfile from "./screens/CompletePlacementProfile";
 import Hostels from "./screens/Hostels";
 import ArtsAndSports from "./screens/artsAndSports";
 import Library from "./screens/library";
-
 function App() {
   return (
     <Box bg="white" textc minH="100vh">
