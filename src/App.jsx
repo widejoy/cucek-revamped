@@ -20,6 +20,8 @@ import TeacherClasses from "./components/ui/teacherClasses";
 import ClassDetails from "./components/ui/classDetails";
 import CompletePlacementProfile from "./screens/CompletePlacementProfile";
 import Hostels from "./screens/Hostels";
+import ArtsAndSports from "./screens/artsAndSports";
+import Library from "./screens/library";
 
 function App() {
   return (
@@ -49,6 +51,8 @@ function App() {
           <Route element={<Login />} path="/login" />
           <Route element={<TeacherClasses />} path="/classes" />
           <Route element={<ClassDetails />} path="/classes/:class_id" />
+          <Route element={<ArtsAndSports />} path="/arts-and-sports" />
+          <Route element={<Library />} path="/library" />
         </Routes>
       </Box>
     </Box>
