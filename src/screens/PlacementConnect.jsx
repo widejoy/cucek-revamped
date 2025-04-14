@@ -1,54 +1,24 @@
-import React, { useEffect, useState } from 'react'
-
-
+import React from 'react';
 import {
   Box,
-  Badge,
-  Text
+  Button,
+  Text,
+  HStack,
 } from "@chakra-ui/react";
-
+import { useNavigate } from 'react-router-dom';
 
 function PlacementConnect() {
-  
-  const [profile,setProfile] = useState({})
+  const navigate = useNavigate();
 
-  const fetchPlacementProfile = async () => {
-    const url = 'http://127.0.0.1:8000/api/placement/profile/';
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        'content-type': 'application/json'
-      },
-    };
+  const handleProfileClick = () => {
+    // Navigate to profile completion page
+    navigate('/complete-profile');
+  };
 
-    try {
-      const response = await fetch(url, options);
-      const data = await response.json();
-      return [data, response.status]
-    } catch (error) {
-      console.error(error);
-      return [null, "401"]
-    }
-  }
-
-  useEffect(
-    () => {
-      fetchPlacementProfile()
-        .then(([data, status]) => {
-          if(status == 200) {
-            setProfile(data)
-          }
-          else if(status == 404) {
-            alert("Create profile")
-          }
-        })
-    }, []
-
-
-
-  )
-
+  const handleEligibleClick = () => {
+    // Navigate to eligible companies page
+    navigate('/eligible-companies');
+  };
 
   return (
     <Box
@@ -60,35 +30,22 @@ function PlacementConnect() {
       bg="#f0f4f8"
       color="#2a4365"
       boxShadow="md"
+      textAlign="center"
     >
-      <Text fontSize="2xl" fontWeight="bold" mb="4">
-        My Profile
+      <Text fontSize="2xl" fontWeight="bold" mb="6">
+        Placement Portal
       </Text>
 
-      {profile.is_placement_coordinator && (
-        <Badge
-          colorScheme="purple"
-          mb="4"
-          fontSize="0.9em"
-          px="2"
-          py="1"
-          borderRadius="md"
-        >
-          Placement Coordinator
-        </Badge>
-      )}
-
-      <Text mb="2">
-        <strong>CGPA:</strong> {profile.cgpa}
-      </Text>
-      <Text mb="2">
-        <strong>10th Percentage:</strong> {profile.percentage_10th}%
-      </Text>
-      <Text mb="2">
-        <strong>12th Percentage:</strong> {profile.percentage_12th}%
-      </Text>
+      <HStack spacing="6" justify="center">
+        <Button colorScheme="blue" onClick={handleProfileClick}>
+          Complete Profile
+        </Button>
+        <Button colorScheme="green" onClick={handleEligibleClick}>
+          Show Eligible Companies
+        </Button>
+      </HStack>
     </Box>
   );
-};
+}
 
-export default PlacementConnect
+export default PlacementConnect;
