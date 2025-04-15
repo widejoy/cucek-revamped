@@ -134,9 +134,8 @@ const Menu = () => {
             "People",
             "Campus Life",
             "Academics",
-            "Alumni",
             "Login",
-            "PlacementConnect",
+            "Placement Connect",
             "Classes",
           ].map((item, index) => (
             <Text
@@ -195,6 +194,8 @@ const Menu = () => {
                       "https://cucek.cusat.ac.in/files/gender_justice.pdf",
                       "_blank"
                     );
+                  } else if (subitem === "Online Courses") {
+                    window.open("https://moodle.cusat.ac.in/", "_blank");
                   } else {
                     navigate(`/${subitem.toLowerCase().replace(/\s+/g, "-")}`);
                   }
