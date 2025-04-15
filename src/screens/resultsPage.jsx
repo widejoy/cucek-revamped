@@ -6,44 +6,63 @@ const ResultsPage = () => {
   const { class_id } = useParams();
   const [studentDetails, setStudentDetails] = useState([]);
   const [marksMap, setMarksMap] = useState({});
+  const [publishedResults, setPublishedResults] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchStudentsAndResults = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `http://localhost:8000/api/class/${class_id}/details/`,
-          {
+
+        const [studentsRes, resultsRes] = await Promise.all([
+          fetch(`http://localhost:8000/api/class/${class_id}/details/`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
+          }),
+          fetch(`http://localhost:8000/api/view-exam-results/${class_id}/`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }),
+        ]);
+
+        if (!studentsRes.ok) {
+          throw new Error("Failed to fetch students");
+        }
+
+        const studentsData = await studentsRes.json();
+        if (studentsData?.students) {
+          setStudentDetails(studentsData.students);
+        }
+
+        if (resultsRes.ok) {
+          const resultsData = await resultsRes.json();
+          if (resultsData?.results) {
+            const resultsArray = Array.isArray(resultsData.results)
+              ? resultsData.results
+              : Object.values(resultsData.results);
+
+            setPublishedResults(resultsArray);
+
+            const initialMarks = {};
+            resultsArray.forEach((res) => {
+              initialMarks[res.student_id] = res.marks;
+            });
+            setMarksMap(initialMarks);
           }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
         }
-
-        const data = await response.json();
-        if (data?.students) {
-          setStudentDetails(data.students);
-          const initialMarks = {};
-          data.students.forEach((student) => {
-            initialMarks[student.id] = student.marks || "";
-          });
-          setMarksMap(initialMarks);
-        }
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStudents();
+    fetchStudentsAndResults();
   }, [class_id]);
 
   const handleInputChange = (studentId, value) => {
@@ -67,7 +86,6 @@ const ResultsPage = () => {
     const grade = calculateGrade(numericMarks);
 
     try {
-      console.log(studentId, studentName, numericMarks, grade);
       const response = await fetch(
         `http://localhost:8000/api/exams/${class_id}/publish-results/`,
         {
@@ -93,8 +111,22 @@ const ResultsPage = () => {
         throw new Error(`Failed to publish marks: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log("Marks published successfully", data);
+      // Refresh results after successful publish
+      const resultRes = await fetch(
+        `http://localhost:8000/api/view-exam-results/${class_id}/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      if (resultRes.ok) {
+        const resultData = await resultRes.json();
+        setPublishedResults(resultData.results);
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error publishing marks:", error);
     }
@@ -126,43 +158,56 @@ const ResultsPage = () => {
               <th style={thStyle}>Username</th>
               <th style={thStyle}>Mark</th>
               <th style={thStyle}>Actions</th>
+              <th style={thStyle}>Grade</th>
             </tr>
           </thead>
           <tbody>
             {studentDetails.length > 0 ? (
-              studentDetails.map((student, idx) => (
-                <tr key={idx} style={rowStyle}>
-                  <td style={tdStyle}>{student.username}</td>
-                  <td style={tdStyle}>
-                    <Input
-                      value={marksMap[student.id]}
-                      onChange={(e) =>
-                        handleInputChange(student.id, e.target.value)
-                      }
-                      placeholder="Enter marks"
-                      type="number"
-                    />
-                  </td>
-                  <td style={tdStyle}>
-                    <Button
-                      colorScheme="blue"
-                      size="sm"
-                      onClick={() =>
-                        handlePublishMark(
-                          student.id,
-                          student.username,
-                          marksMap[student.id]
-                        )
-                      }
-                    >
-                      Publish Marks
-                    </Button>
-                  </td>
-                </tr>
-              ))
+              studentDetails.map((student, idx) => {
+                const published = publishedResults.find(
+                  (r) => r.student_id === student.id
+                );
+
+                return (
+                  <tr key={idx} style={rowStyle}>
+                    <td style={tdStyle}>{student.username}</td>
+                    <td style={tdStyle}>
+                      <Input
+                        value={marksMap[student.id] || ""}
+                        onChange={(e) =>
+                          handleInputChange(student.id, e.target.value)
+                        }
+                        placeholder="Enter marks"
+                        type="number"
+                      />
+                    </td>
+                    <td style={tdStyle}>
+                      <Button
+                        colorScheme="blue"
+                        size="sm"
+                        onClick={() =>
+                          handlePublishMark(
+                            student.id,
+                            student.username,
+                            marksMap[student.id]
+                          )
+                        }
+                      >
+                        Publish Marks
+                      </Button>
+                    </td>
+                    <td style={tdStyle}>
+                      {published?.grade ??
+                        (marksMap[student.id]
+                          ? calculateGrade(marksMap[student.id])
+                          : "N/A")}
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
-                <td style={tdStyle} colSpan="3">
+                <td style={tdStyle} colSpan="4">
                   No students found.
                 </td>
               </tr>
