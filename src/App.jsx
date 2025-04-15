@@ -59,6 +59,15 @@ function App() {
           <Route element={<ClassDetails />} path="/classes/:class_id" />
           <Route element={<ArtsAndSports />} path="/arts-and-sports" />
           <Route element={<Library />} path="/library" />
+          <Route
+            element={<ResultsPage />}
+            path="/classes/:class_id/subject/:exam_id/results/:exam_id"
+          />
+          <Route element={<Pta />} path="/pta" />
+          <Route element={<Tour />} path="/tour" />
+          <Route element={<PlacementCompanies />} path="/placement-companies" />
+          <Route element={<AddCompany />} path="/add-company" />
+          <Route element={<PlacementAdmin />} path="/placement-admin" />
         </Routes>
       </Box>
     </Box>

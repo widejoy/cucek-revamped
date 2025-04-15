@@ -68,6 +68,10 @@ const Menu = () => {
         closeMenu();
         navigate("/alumni");
         break;
+      case "Classes":
+        closeMenu();
+        navigate("/classes");
+        break;
       default:
         setBgImage("");
         setSubmenuItems([]);
@@ -133,6 +137,7 @@ const Menu = () => {
             "Alumni",
             "Login",
             "PlacementConnect",
+            "Classes",
           ].map((item, index) => (
             <Text
               key={index}
