@@ -54,7 +54,7 @@ const ResultsPage = () => {
   };
 
   const calculateGrade = (marks) => {
-    if (marks >= 90) return "A+";
+    if (marks >= 90) return "S";
     if (marks >= 80) return "A";
     if (marks >= 70) return "B";
     if (marks >= 60) return "C";
