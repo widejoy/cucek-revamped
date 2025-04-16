@@ -84,22 +84,21 @@ export default function Mca() {
     ),
     hod: (
       <>
-        Our Head of Department, <b>Dr. Josephkutty Jacob</b>, is a visionary
-        leader who has also served as the principal of the institution.
+       
       </>
     ),
   };
 
   return (
     <AcademicsTemplate
-      image="https://cucek.cusat.ac.in/img/mca/1.jpg"
+      image="https://cucek.cusat.ac.in/img/mca/3.jpg"
       branchName="Masters of Computer Applications"
       subtitle="Where Innovation Meets Excellence"
       sectionContent={sectionContent}
       hodPhoto={
-        "https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/IT/FACULTY%20PICS/02.jpg"
+        ""
       }
-      hodName={"Dr. JABIR K V T"}
+      hodName={""}
       hodProfilePath={"/"}
     />
   );

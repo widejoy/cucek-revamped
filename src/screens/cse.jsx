@@ -91,7 +91,6 @@ export default function Cs() {
     <AcademicsTemplate
       image="https://cucek.cusat.ac.in/img/cse/5.jpg"
       branchName="Computer Science"
-      subtitle="Your future in our hands"
       sectionContent={sectionContent}
       hodPhoto={
         "https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/CSE/FACULTY%20PICS/01.jpg"

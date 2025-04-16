@@ -5,7 +5,7 @@ import { useNavStore } from "../../store/globalState";
 import { sub } from "framer-motion/client";
 
 const Menu = () => {
-  const [bgImage, setBgImage] = useState(""); // State for the background image
+  const [bgImage, setBgImage] = useState("dfgdfg.png"); // State for the background image
   const [selectedItem, setSelectedItem] = useState(""); // State to track selected menu item
   const [submenuItems, setSubmenuItems] = useState([]); // State for submenu items
   const closeMenu = useNavStore((state) => state.closeMenu);
@@ -28,7 +28,7 @@ const Menu = () => {
         navigate("/login");
         break;
       case "People":
-        setBgImage("people.jpg");
+        setBgImage("campuslife.jpeg");
         setSubmenuItems(["Faculty"]);
         break;
       case "Placement  Connect":
@@ -36,11 +36,11 @@ const Menu = () => {
         navigate("/placement-connect");
         break;
       case "Campus Life":
-        setBgImage("campuslife.jpg");
+        setBgImage("campuslife.jpeg");
         setSubmenuItems([
           "Hostels",
           "Anti Ragging Cell",
-          "Grievance Redressal Cells",
+          "Internal Complaints Committee",
           "Co-Teaching Committees",
           "Arts and Sports",
           "Library",
@@ -51,20 +51,19 @@ const Menu = () => {
         ]);
         break;
       case "Academics":
-        setBgImage("academics.jpg");
+        setBgImage("campuslife.jpeg");
         setSubmenuItems([
           "CSE",
           "CE",
           "EEE",
           "IT",
-          "ME",
           "MCA",
           "Research",
           "Online Courses",
         ]);
         break;
       case "Alumni":
-        setBgImage("alumini.jpg");
+        setBgImage("campuslife.jpeg");
         closeMenu();
         navigate("/alumni");
         break;
@@ -73,7 +72,7 @@ const Menu = () => {
         navigate("/classes");
         break;
       default:
-        setBgImage("");
+        setBgImage("campuslife.jpeg");
         setSubmenuItems([]);
         break;
     }
@@ -175,25 +174,13 @@ const Menu = () => {
                 onClick={() => {
                   closeMenu();
                   if (subitem === "Anti Ragging Cell") {
-                    window.open(
-                      "https://cucek.cusat.ac.in/files/antiragging.pdf",
-                      "_blank"
-                    );
-                  } else if (subitem === "Grievance Redressal Cells") {
-                    window.open(
-                      "https://cucek.cusat.ac.in/files/internal_complaints.pdf",
-                      "_blank"
-                    );
+                    navigate('/anti-ragging-committee')
+                  } else if (subitem === "Internal Complaints Cells") {
+                    navigate("/internal-complaints-committee")
                   } else if (subitem === "Co-Teaching Committees") {
-                    window.open(
-                      "https://cucek.cusat.ac.in/files/ctc.pdf",
-                      "_blank"
-                    );
+                    navigate("co-teaching-committee")
                   } else if (subitem == "Gender Justice Committee") {
-                    window.open(
-                      "https://cucek.cusat.ac.in/files/gender_justice.pdf",
-                      "_blank"
-                    );
+                    navigate("/gender-justice-committee")
                   } else if (subitem === "Online Courses") {
                     window.open("https://moodle.cusat.ac.in/", "_blank");
                   } else {

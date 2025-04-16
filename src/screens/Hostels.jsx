@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
@@ -8,10 +9,10 @@ import {
 } from "@chakra-ui/react";
 
 const Hostels = () => {
+  const navigate = useNavigate()
   return (
     <Box
-      w="100vw"
-      h="100vh"
+      h="92.5vh"
       bg="gray.900"
       color="white"
       display="flex"
@@ -36,7 +37,7 @@ const Hostels = () => {
             colorScheme="teal"
             variant="solid"
             onClick={() =>
-              window.open("https://cucek.cusat.ac.in/files/gents.pdf", "_blank")
+              navigate('/gents-hostels')
             }
           >
             Gents Hostels
@@ -47,10 +48,7 @@ const Hostels = () => {
             colorScheme="pink"
             variant="solid"
             onClick={() =>
-              window.open(
-                "https://cucek.cusat.ac.in/files/ladies.pdf",
-                "_blank"
-              )
+             navigate('/ladies-hostels')
             }
           >
             Ladies Hostels
@@ -61,19 +59,12 @@ const Hostels = () => {
             colorScheme="yellow"
             variant="solid"
             onClick={() =>
-              window.open(
-                "https://cucek.cusat.ac.in/files/committee.pdf",
-                "_blank"
-              )
+              navigate('/hostel-committee')
             }
           >
             Hostel Committee
           </Button>
         </VStack>
-
-        <Text fontSize="sm" mt={6} color="gray.400">
-          Click on a section to view the PDF.
-        </Text>
       </Container>
     </Box>
   );

@@ -184,14 +184,14 @@ const AcademicsTemplate = ({
             <Text fontSize="lg" color="gray.600">
               {sectionContent.hod}
             </Text>
-            <Button
+            {/* <Button
               onClick={() => navigate(hodProfilePath)}
               colorScheme="blue"
               size="lg"
               variant="solid"
             >
               View Profile
-            </Button>
+            </Button> */}
           </VStack>
         </Box>
       </Box>
