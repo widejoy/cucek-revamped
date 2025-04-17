@@ -28,6 +28,14 @@ import Tour from "./screens/Tour";
 import PlacementCompanies from "./screens/PlacementCompanies";
 import AddCompany from "./screens/AddCompany";
 import PlacementAdmin from "./screens/PlacementAdmin";
+import GentsHostel from "./screens/GentsHostel";
+import LadiesHostel from "./screens/LadiesHostel";
+import HostelCommittee from "./screens/HostelCommittee";
+import AntiRaggingCommittee from "./screens/AntiRaggingCommittee";
+import InternalComplaints from "./screens/InternalComplaints";
+import CoTeachingCommittee from "./screens/CoTeachingCommittee";
+import GenderJusticeCommittee from "./screens/GenderJusticeCommittee";
+import Eee from "./screens/eee";
 
 function App() {
   return (
@@ -39,6 +47,7 @@ function App() {
           <Route element={<AboutUs />} path="/about-us" />
           <Route element={<Cs />} path="/cse" />
           <Route element={<Ece />} path="/ece" />
+          <Route element={<Eee />} path="/eee" />
           <Route element={<Ce />} path="/ce" />
           <Route element={<Mca />} path="/mca" />
           <Route element={<It />} path="/it" />
@@ -68,6 +77,13 @@ function App() {
           <Route element={<PlacementCompanies />} path="/placement-companies" />
           <Route element={<AddCompany />} path="/add-company" />
           <Route element={<PlacementAdmin />} path="/placement-admin" />
+          <Route element={<GentsHostel />} path="/gents-hostels" />
+          <Route element={<LadiesHostel />} path="/ladies-hostels" />
+          <Route element={<HostelCommittee />} path="/hostel-committee" />
+          <Route element={<AntiRaggingCommittee />} path="/anti-ragging-committee" />
+          <Route element={<InternalComplaints />} path="/internal-complaints-committee"/>
+          <Route element={<CoTeachingCommittee />} path="/co-teaching-committee"/>
+          <Route element={<GenderJusticeCommittee />} path="/gender-justice-committee"/>
         </Routes>
       </Box>
     </Box>
