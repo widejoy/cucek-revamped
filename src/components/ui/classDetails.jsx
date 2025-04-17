@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Box, Heading, Text } from "@chakra-ui/react";
 import AddStudent from "./addStudent";
 
 const ClassDetails = () => {
@@ -9,6 +8,7 @@ const ClassDetails = () => {
 
   const [studentDetails, setStudentDetails] = useState([]);
   const [subjectDetails, setSubjectDetails] = useState([]);
+  const [userRole, setUserRole] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [classDetails, setClassDetails] = useState({});
@@ -48,122 +48,212 @@ const ClassDetails = () => {
       }
     };
 
+    const fetchUserRole = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          'http://127.0.0.1:8000/api/class/1/role/',
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data?.role) {
+          setUserRole(data.role)
+        }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchClassDetails();
+    fetchUserRole();
   }, [class_id]);
 
   const handleViewResults = (subjectId) => {
     navigate(`/classes/${class_id}/subject/${subjectId}/results/${subjectId}`);
   };
 
+
+
   return (
-    <Box
-      maxW="1200px"
-      mx="auto"
-      p={6}
-      bg="gray.800"
-      borderRadius="lg"
-      color="white"
-    >
-      <Heading mb={2} textAlign="center">
-        {classDetails.name}
-      </Heading>
-      <Text mb={6} textAlign="center" color="gray.300">
-        {classDetails.description}
-      </Text>
+    // ... all the same imports and logic
 
-      <AddStudent class_id={class_id} />
+    <div className="container">
+      <div className="card">
+        <h1 className="title">{classDetails.name || "Class Details"}</h1>
+        <p className="subtitle">{classDetails.description || ""}</p>
+        {userRole === "Teacher" && <AddStudent class_id={class_id} />}
 
-      {loading && <Text mt={4}>Loading...</Text>}
-      {error && <Text color="red.400">{error}</Text>}
+        {loading && <p className="loading">Loading...</p>}
+        {error && <p className="error">{error}</p>}
 
-      {/* Student Table */}
-      <Box mt={8}>
-        <Heading size="md" mb={4}>
-          Students
-        </Heading>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead style={{ background: "#2D3748" }}>
-            <tr>
-              <th style={thStyle}>Username</th>
-              <th style={thStyle}>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {studentDetails.length > 0 ? (
-              studentDetails.map((student, idx) => (
-                <tr key={idx} style={rowStyle}>
-                  <td style={tdStyle}>{student.username}</td>
-                  <td style={tdStyle}>{student.email}</td>
-                </tr>
-              ))
-            ) : (
+        <div className="section">
+          <h2 className="section-title">Students</h2>
+          <table className="table">
+            <thead>
               <tr>
-                <td style={tdStyle} colSpan="2">
-                  No students found.
-                </td>
+                <th>Username</th>
+                <th>Email</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </Box>
-
-      {/* Subjects Table */}
-      <Box mt={8}>
-        <Heading size="md" mb={4}>
-          Subjects
-        </Heading>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead style={{ background: "#2D3748" }}>
-            <tr>
-              <th style={thStyle}>Name</th>
-              <th style={thStyle}>Description</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {subjectDetails.length > 0 ? (
-              subjectDetails.map((subject, idx) => (
-                <tr key={idx} style={rowStyle}>
-                  <td style={tdStyle}>{subject.name}</td>
-                  <td style={tdStyle}>{subject.description}</td>
-                  <td style={tdStyle}>
-                    <Button
-                      colorScheme="blue"
-                      size="sm"
-                      onClick={() => handleViewResults(subject.id)}
-                    >
-                      View Results
-                    </Button>
-                  </td>
+            </thead>
+            <tbody>
+              {studentDetails.length > 0 ? (
+                studentDetails.map((student, idx) => (
+                  <tr key={idx}>
+                    <td>{student.username}</td>
+                    <td>{student.email}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No students found.</td>
                 </tr>
-              ))
-            ) : (
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="section">
+          <h2 className="section-title">Subjects</h2>
+          <table className="table">
+            <thead>
               <tr>
-                <td style={tdStyle} colSpan="3">
-                  No subjects found.
-                </td>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </Box>
-    </Box>
+            </thead>
+            <tbody>
+              {subjectDetails.length > 0 ? (
+                subjectDetails.map((subject, idx) => (
+                  <tr key={idx}>
+                    <td>{subject.name}</td>
+                    <td>{subject.description}</td>
+                    <td>
+                      <button
+                        className="button"
+                        onClick={() => handleViewResults(subject.id)}
+                      >
+                        View Results
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">No subjects found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <style>{`
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      background-color: #111;
+      min-height: 100vh;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      color: #f8fafc;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #ccc;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 24px;
+    }
+
+    .section {
+      margin-top: 32px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      color: #f1f5f9;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .table th {
+      background-color: #1c2535;
+      color: #f8fafc;
+    }
+
+    .table td {
+      color: #cbd5e1;
+    }
+
+    .table tr:hover {
+      background-color: #334155;
+    }
+
+    .button {
+      background-color: #2563eb;
+      color: #fff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3b82f6;
+    }
+
+    .error {
+      color: #f87171;
+      margin-top: 16px;
+    }
+
+    .loading {
+      margin-top: 16px;
+      font-style: italic;
+      color: #cbd5e1;
+    }
+  `}</style>
+    </div>
+
   );
-};
-
-const thStyle = {
-  padding: "12px",
-  textAlign: "left",
-  color: "#E2E8F0",
-};
-
-const tdStyle = {
-  padding: "10px",
-  borderBottom: "1px solid #444",
-};
-
-const rowStyle = {
-  transition: "background 0.2s ease-in-out",
 };
 
 export default ClassDetails;

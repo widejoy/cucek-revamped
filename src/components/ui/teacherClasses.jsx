@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const TeacherClasses = () => {
-    const [classes, setClasses] = useState([]); // State to store the fetched classes data
-    const [error, setError] = useState(null);   // State to store any errors
-    const [loading, setLoading] = useState(true); // Loading state to show spinner or message
+    const [classes, setClasses] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Function to fetch classes data using fetch
         const fetchClasses = async () => {
             const url = 'http://localhost:8000/api/teacher/classes/';
             const options = {
@@ -17,172 +16,146 @@ const TeacherClasses = () => {
             };
 
             try {
-                setLoading(true); // Start loading
-
-                // Make the API call using fetch
+                setLoading(true);
                 const response = await fetch(url, options);
-
-                // Check if the response is okay (status code 2xx)
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status} - ${response.statusText}`);
                 }
-
-                // Parse the response body as JSON
                 const data = await response.json();
-
-                // Check if response has the expected structure
                 if (data && data.classes) {
-                    setClasses(data.classes); // Update the state with the response data
+                    setClasses(data.classes);
                 } else {
                     setError('Unexpected response structure');
                 }
             } catch (error) {
-                // Handle errors by setting the error state
                 setError(error.message);
             } finally {
-                setLoading(false); // End loading
+                setLoading(false);
             }
         };
 
-        // Call fetchClasses when the component mounts
         fetchClasses();
-    }, []); // Empty dependency array ensures this effect runs only once after the first render
+    }, []);
 
-    // Inline styles with animations and beautiful design
     const styles = {
-        container: {
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '30px',
-            backgroundColor: '#1a202c', // Dark background with more contrast
-            borderRadius: '12px',
-            boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
-            height: 'auto',
+        page: {
+            backgroundColor: '#000',
+            minHeight: '100vh',
+            padding: '40px 20px',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            transition: 'all 0.3s ease-in-out',
+            alignItems: 'center',
+            fontFamily: 'sans-serif',
+        },
+        container: {
+            width: '100%',
+            maxWidth: '1200px',
+            backgroundColor: '#111',
+            borderRadius: '16px',
+            padding: '40px',
+            boxShadow: '0 0 25px rgba(255,255,255,0.05)',
         },
         header: {
+            color: '#fff',
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
             textAlign: 'center',
             marginBottom: '30px',
-        },
-        title: {
-            color: '#f7fafc', // Light color for title
-            fontSize: '3rem',
-            fontWeight: 'bold',
             letterSpacing: '1px',
-            marginBottom: '15px',
-            textShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
         },
-        loading: {
-            marginTop: '20px',
+        loadingWrapper: {
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '30px',
         },
         spinner: {
-            border: '4px solid rgba(255, 255, 255, 0.3)',
-            borderTop: '4px solid #3182ce', // Blue color
+            border: '5px solid rgba(255, 255, 255, 0.2)',
+            borderTop: '5px solid #fff',
             borderRadius: '50%',
-            width: '60px',
-            height: '60px',
-            animation: 'spin 1.5s linear infinite',
+            width: '50px',
+            height: '50px',
+            animation: 'spin 1s linear infinite',
         },
-        errorMessage: {
+        error: {
             color: 'red',
-            fontSize: '1.2rem',
             textAlign: 'center',
-            marginBottom: '30px',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
+            fontSize: '1.2rem',
         },
-        noClasses: {
-            color: '#edf2f7', // Light gray text
-            fontSize: '1.2rem',
+        noData: {
+            color: '#bbb',
             textAlign: 'center',
+            fontSize: '1.2rem',
             marginTop: '20px',
-            fontStyle: 'italic',
         },
-        classesList: {
+        grid: {
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '20px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '25px',
         },
-        classCard: {
-            backgroundColor: '#2d3748', // Dark card background color
-            padding: '25px',
-            borderRadius: '15px',
-            color: '#edf2f7',
-            boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)',
-            transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+        card: {
+            backgroundColor: '#1a1a1a',
+            borderRadius: '12px',
+            padding: '20px',
+            color: '#fff',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            transition: 'transform 0.2s ease-in-out',
         },
-        classTitle: {
-            fontSize: '1.8rem',
-            fontWeight: '600',
+        cardTitle: {
+            fontSize: '1.4rem',
+            fontWeight: 'bold',
             marginBottom: '10px',
-            color: '#edf2f7',
             textTransform: 'uppercase',
-            letterSpacing: '1px',
         },
-        classDescription: {
-            color: '#e2e8f0', // Light gray text for class description
-            fontSize: '1.1rem',
-            fontStyle: 'italic',
+        cardDesc: {
+            fontSize: '1rem',
+            color: '#ccc',
             marginBottom: '15px',
         },
-        divider: {
-            borderTop: '1px solid #e2e8f0',
-            margin: '15px 0',
-        },
-        moreDetails: {
-            color: '#3182ce', // Blue text color for the link
+        link: {
+            color: '#4fd1c5',
+            textDecoration: 'none',
             fontWeight: 'bold',
-            cursor: 'pointer',
-            transition: 'color 0.2s ease',
         },
-        moreDetailsHover: {
-            textDecoration: 'underline',
-            color: '#63b3ed',
-        },
+        '@keyframes': `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `
     };
-
-    // Keyframes for spinner animation
-    const keyframes = `
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  `;
 
     return (
         <>
-            <style>{keyframes}</style> {/* Inject keyframes for spinner animation */}
-            <div style={styles.container}>
-                <div style={styles.header}>
-                    <h1 style={styles.title}>Classes</h1>
+            <style>{styles['@keyframes']}</style>
+            <div style={styles.page}>
+                <div style={styles.container}>
+                    <h1 style={styles.header}>Your Classes</h1>
                     {loading && (
-                        <div style={styles.loading}>
+                        <div style={styles.loadingWrapper}>
                             <div style={styles.spinner}></div>
                         </div>
                     )}
+                    {error && <div style={styles.error}>{error}</div>}
+                    {!loading && !error && classes.length === 0 && (
+                        <div style={styles.noData}>No classes found.</div>
+                    )}
+                    {!loading && !error && classes.length > 0 && (
+                        <div style={styles.grid}>
+                            {classes.map((classItem) => (
+                                <div key={classItem.id} style={styles.card}>
+                                    <div style={styles.cardTitle}>{classItem.name}</div>
+                                    <div style={styles.cardDesc}>{classItem.description}</div>
+                                    <a
+                                        href={`/classes/${classItem.id}/`}
+                                        style={styles.link}
+                                    >
+                                        View Details →
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
-
-                {error ? (
-                    <div style={styles.errorMessage}>{error}</div>
-                ) : classes.length === 0 ? (
-                    <div style={styles.noClasses}>No classes available.</div>
-                ) : (
-                    <div style={styles.classesList}>
-                        {classes.map((classItem, index) => (
-                            <div key={index} style={styles.classCard}>
-                                <h2 style={styles.classTitle}>{classItem.name}</h2>
-                                <p style={styles.classDescription}>{classItem.description}</p>
-                                <div style={styles.divider}></div>
-                                <a href={`/classes/${classItem.id}/`} style={styles.moreDetails}>
-                                    More details
-                                </a>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </div>
         </>
     );
