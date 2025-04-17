@@ -43,7 +43,7 @@ function App() {
       <GlobalAppBar />
       <Box as="main">
         <Routes>
-          <Route element={<HomePage />} path="/" />
+          {/* <Route element={<HomePage />} path="/" /> */}
           <Route element={<AboutUs />} path="/about-us" />
           <Route element={<Cs />} path="/cse" />
           <Route element={<Ece />} path="/ece" />
@@ -68,6 +68,11 @@ function App() {
           <Route element={<ClassDetails />} path="/classes/:class_id" />
           <Route element={<ArtsAndSports />} path="/arts-and-sports" />
           <Route element={<Library />} path="/library" />
+          <Route element={<Tour/>} path="/"/>
+          <Route element={<PlacementCompanies/>} path="/placement-application"/>
+          <Route element={<AddCompany />} path="/add-company"/>
+          <Route element={<PlacementAdmin />} path="/companies"/>
+
           <Route
             element={<ResultsPage />}
             path="/classes/:class_id/subject/:exam_id/results/:exam_id"

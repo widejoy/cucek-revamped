@@ -7,7 +7,7 @@ function PanoViewer() {
         if (window.pannellum && viewerRef.current) {
             window.pannellum.viewer(viewerRef.current, {
                 default: {
-                    firstScene: "scene1",
+                    firstScene: "scene6",
                     sceneFadeDuration: 1000,
                 },
                 scenes: {
@@ -15,6 +15,7 @@ function PanoViewer() {
                         type: "equirectangular",
                         panorama: "pano/enterence.PNG",
                         autoLoad: true,
+                        yaw: -80,
                         hotSpots: [
                             {
                                 pitch: 5,
@@ -108,6 +109,8 @@ function PanoViewer() {
                         type: "equirectangular",
                         panorama: "pano/sample-pano.jpg",
                         autoLoad: true,
+                        yaw: -40,
+                        pitch: -30,
                         hotSpots: [
                             {
                                 pitch: -20,
@@ -115,6 +118,13 @@ function PanoViewer() {
                                 type: "scene",
                                 text: "Go Parking",
                                 sceneId: "scene2",
+                            },
+                            {
+                                pitch: -40,
+                                yaw: -50,
+                                type: "scene",
+                                text: "Go Inside",
+                                sceneId: "scene5",
                             },
                         ],
                     },
@@ -126,7 +136,7 @@ function PanoViewer() {
     return (
         <div
             ref={viewerRef}
-            style={{ width: "100%", height: "90vh" }}
+            style={{ width: "100%", height: "93vh" }}
         />
     );
 }
