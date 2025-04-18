@@ -136,6 +136,7 @@ const Menu = () => {
             "Login",
             "Placement Connect",
             "Classes",
+            "Login"
           ].map((item, index) => (
             <Text
               key={index}

@@ -13,7 +13,7 @@ const AddStudent = ({ class_id }) => {
         async function addStudent() {
             const url = `http://localhost:8000/api/class/${class_id}/add-student/`;
             const body = {
-                student_id: student
+                student_email: student
             };
             const options = {
                 method: 'POST',
@@ -63,10 +63,10 @@ const AddStudent = ({ class_id }) => {
     return (
         <>
             {/* Add Student Section */}
-            <Text mb={2}>Student ID:</Text>
+            <Text mb={2}>Student email:</Text>
             <Input
                 value={student}  // Value of student state
-                placeholder="Enter student ID"
+                placeholder="Enter student email"
                 onChange={(e) => setStudent(e.target.value)}  // Update student state
                 mb={4}
             />
