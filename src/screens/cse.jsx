@@ -96,7 +96,9 @@ export default function Cs() {
         "https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/CSE/FACULTY%20PICS/01.jpg"
       }
       hodName={"Dr. Preetha Mathew"}
-      hodProfilePath={"/"}
+      hodProfilePath={
+        "https://iqac.cusat.ac.in/Web/profile_view/325/Prof.Dr.PREETHAMATHEWK"
+      }
     />
   );
 }

@@ -100,7 +100,6 @@ export default function Ece() {
         "https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/ECE/FACULTY%20PICS/02.jpg"
       }
       hodName={"Dr. Anil Kumar K. K."}
-      hodProfilePath={"/"}
     />
   );
 }
