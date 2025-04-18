@@ -23,7 +23,7 @@ const AcademicsTemplate = ({
   sectionContent,
   hodPhoto,
   hodName,
-  hodProfilePath,
+  hodProfilePath = "",
 }) => {
   const teamRef = useRef(null);
   const visionRef = useRef(null);
@@ -184,14 +184,16 @@ const AcademicsTemplate = ({
             <Text fontSize="lg" color="gray.600">
               {sectionContent.hod}
             </Text>
-            {/* <Button
-              onClick={() => navigate(hodProfilePath)}
-              colorScheme="blue"
-              size="lg"
-              variant="solid"
-            >
-              View Profile
-            </Button> */}
+            {hodProfilePath != "" && (
+              <Button
+                onClick={() => window.open(hodProfilePath, "_blank")}
+                colorScheme="blue"
+                size="lg"
+                variant="solid"
+              >
+                View Profile
+              </Button>
+            )}
           </VStack>
         </Box>
       </Box>
