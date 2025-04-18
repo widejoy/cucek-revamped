@@ -35,7 +35,9 @@ import AntiRaggingCommittee from "./screens/AntiRaggingCommittee";
 import InternalComplaints from "./screens/InternalComplaints";
 import CoTeachingCommittee from "./screens/CoTeachingCommittee";
 import GenderJusticeCommittee from "./screens/GenderJusticeCommittee";
+import ManageExams from "./components/ui/ManageExams";
 import Eee from "./screens/eee";
+import ManageStudentMarks from "./components/ui/ManageStudentMarks";
 
 function App() {
   return (
@@ -68,6 +70,8 @@ function App() {
           <Route element={<ClassDetails />} path="/classes/:class_id" />
           <Route element={<ArtsAndSports />} path="/arts-and-sports" />
           <Route element={<Library />} path="/library" />
+          <Route element={<ManageExams />} path="/class/:class_id/subject/:subject_id/exams" />
+          <Route element={<ManageStudentMarks />} path="/class/:class_id/subject/:subject_id/exams/:exam_id"></Route>
           <Route
             element={<ResultsPage />}
             path="/classes/:class_id/subject/:exam_id/results/:exam_id"
@@ -81,9 +85,9 @@ function App() {
           <Route element={<LadiesHostel />} path="/ladies-hostels" />
           <Route element={<HostelCommittee />} path="/hostel-committee" />
           <Route element={<AntiRaggingCommittee />} path="/anti-ragging-committee" />
-          <Route element={<InternalComplaints />} path="/internal-complaints-committee"/>
-          <Route element={<CoTeachingCommittee />} path="/co-teaching-committee"/>
-          <Route element={<GenderJusticeCommittee />} path="/gender-justice-committee"/>
+          <Route element={<InternalComplaints />} path="/internal-complaints-committee" />
+          <Route element={<CoTeachingCommittee />} path="/co-teaching-committee" />
+          <Route element={<GenderJusticeCommittee />} path="/gender-justice-committee" />
         </Routes>
       </Box>
     </Box>

@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Text, Input, Button } from '@chakra-ui/react';
+import { Text, Input, Button, Heading } from '@chakra-ui/react';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionPanel,
+    AccordionButton,
+    AccordionIcon
+} from '@chakra-ui/accordion';
 
 const AddStudent = ({ class_id }) => {
     const [student, setStudent] = useState("");  // State to hold student ID
@@ -62,34 +69,62 @@ const AddStudent = ({ class_id }) => {
 
     return (
         <>
-            {/* Add Student Section */}
-            <Text mb={2}>Student email:</Text>
-            <Input
-                value={student}  // Value of student state
-                placeholder="Enter student email"
-                onChange={(e) => setStudent(e.target.value)}  // Update student state
-                mb={4}
-            />
-            <Button colorScheme="teal" onClick={handleStudent}>Add Student</Button>
-            <br />
+            <Accordion allowToggle>
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton>
+                            <Heading mb={2} textAlign="center">
+                                Add Student
+                            </Heading>
+
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                        <Text mb={2}>Student email:</Text>
+                        <Input
+                            value={student}  // Value of student state
+                            placeholder="Enter student email"
+                            onChange={(e) => setStudent(e.target.value)}  // Update student state
+                            mb={4}
+                        />
+                        <Button colorScheme="teal" onClick={handleStudent}>Add Student</Button>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
             <br />
 
-            {/* Add Subject Section */}
-            <Text mb={2}>Subject Name:</Text>
-            <Input
-                value={subject.name}  // Value of subject name state
-                placeholder="Enter subject name"
-                onChange={(e) => setSubject({ ...subject, name: e.target.value })}  // Update subject name state
-                mb={4}
-            />
-            <Text mb={2}>Subject Description:</Text>
-            <Input
-                value={subject.description}  // Value of subject description state
-                placeholder="Enter subject description"
-                onChange={(e) => setSubject({ ...subject, description: e.target.value })}  // Update subject description state
-                mb={4}
-            />
-            <Button colorScheme="teal" onClick={handleSubject}>Add Subject</Button>
+            <Accordion allowToggle>
+                <AccordionItem>
+                    <h2>
+                        <AccordionButton>
+                            <Heading mb={2} textAlign="center">
+                                Add Subject
+                            </Heading>
+
+                            <AccordionIcon />
+                        </AccordionButton>
+                    </h2>
+                    <AccordionPanel pb={4}>
+                        <Text mb={2}>Subject Name:</Text>
+                        <Input
+                            value={subject.name}  // Value of subject name state
+                            placeholder="Enter subject name"
+                            onChange={(e) => setSubject({ ...subject, name: e.target.value })}  // Update subject name state
+                            mb={4}
+                        />
+                        <Text mb={2}>Subject Description:</Text>
+                        <Input
+                            value={subject.description}  // Value of subject description state
+                            placeholder="Enter subject description"
+                            onChange={(e) => setSubject({ ...subject, description: e.target.value })}  // Update subject description state
+                            mb={4}
+                        />
+                        <Button colorScheme="teal" onClick={handleSubject}>Add Subject</Button>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
+
         </>
     );
 };
