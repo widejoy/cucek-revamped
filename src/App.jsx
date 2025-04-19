@@ -75,7 +75,7 @@ function App() {
           <Route element={<AddCompany />} path="/add-company"/>
           <Route element={<PlacementAdmin />} path="/companies"/>
 
-          <Route element={<ManageExams />} path="/class/:class_id/subject/:subject_id/exams" />
+          <Route element={<ManageExams />} path="/class/:class_id/subject/:subject_id/exams/" />
           <Route element={<ManageStudentMarks />} path="/class/:class_id/subject/:subject_id/exams/:exam_id"></Route>
           <Route
             element={<ResultsPage />}

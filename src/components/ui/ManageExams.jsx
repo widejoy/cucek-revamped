@@ -18,7 +18,7 @@ function ManageExams() {
 
     const [exams, setExams] = useState([])
 
-    const { class_id, subject_id } = useParams()
+    const { class_id, subject_id} = useParams()
 
     useEffect(() => {
 
@@ -27,7 +27,7 @@ function ManageExams() {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`
             }
         }).then((res) => {
-            if (res.status !== 200){
+            if (res.status !== 200) {
                 return
             }
             res.json().then((data) => {
@@ -63,7 +63,8 @@ function ManageExams() {
     }
 
     return (
-        <Container className="base">
+        <div className="base">
+
             <Accordion allowToggle>
                 <AccordionItem>
                     <h2>
@@ -150,8 +151,7 @@ function ManageExams() {
       }
     `}
             </style>
-        </Container>
-
+        </div>
     )
 
 }

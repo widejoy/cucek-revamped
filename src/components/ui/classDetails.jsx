@@ -78,8 +78,8 @@ const ClassDetails = () => {
     fetchUserRole();
   }, [class_id]);
 
-  const handleViewResults = (subjectId) => {
-    navigate(`/class/${class_id}/subject/${subjectId}/exams`);
+  const handleViewResults = (subjectId, role) => {
+    navigate(`/class/${class_id}/subject/${subjectId}/exams/`);
   };
 
 
@@ -131,6 +131,7 @@ const ClassDetails = () => {
                 <th>Description</th>
                 <th>Actions</th>
 
+
               </tr>
             </thead>
             <tbody>
@@ -149,7 +150,7 @@ const ClassDetails = () => {
 
                     {userRole === "Student" && <td><button
                       className="button"
-
+                      onClick={() => handleViewResults(subject.id)}
                     >
                       View Results
                     </button></td>}
@@ -163,9 +164,7 @@ const ClassDetails = () => {
               )}
             </tbody>
           </table>
-
-
-
+              
         </div>
       </div>
 
