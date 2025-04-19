@@ -79,7 +79,7 @@ const ClassDetails = () => {
   }, [class_id]);
 
   const handleViewResults = (subjectId) => {
-    navigate(`/classes/${class_id}/subject/${subjectId}/results/${subjectId}`);
+    navigate(`/class/${class_id}/subject/${subjectId}/exams`);
   };
 
 
@@ -130,6 +130,7 @@ const ClassDetails = () => {
                 <th>Name</th>
                 <th>Description</th>
                 <th>Actions</th>
+
               </tr>
             </thead>
             <tbody>
@@ -138,14 +139,21 @@ const ClassDetails = () => {
                   <tr key={idx}>
                     <td>{subject.name}</td>
                     <td>{subject.description}</td>
-                    <td>
-                      <button
-                        className="button"
-                        onClick={() => handleViewResults(subject.id)}
-                      >
-                        View Results
-                      </button>
-                    </td>
+
+                    {userRole === "Teacher" && <td><button
+                      className="button"
+                      onClick={() => handleViewResults(subject.id)}
+                    >
+                      Manage Exams
+                    </button></td>}
+
+                    {userRole === "Student" && <td><button
+                      className="button"
+
+                    >
+                      View Results
+                    </button></td>}
+
                   </tr>
                 ))
               ) : (
@@ -155,6 +163,9 @@ const ClassDetails = () => {
               )}
             </tbody>
           </table>
+
+
+
         </div>
       </div>
 
