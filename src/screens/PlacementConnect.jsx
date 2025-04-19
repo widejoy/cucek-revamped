@@ -11,39 +11,56 @@ function PlacementConnect() {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    // Navigate to profile completion page
-    navigate('/complete-profile');
+    navigate('/placement-profile');
   };
 
   const handleEligibleClick = () => {
-    // Navigate to eligible companies page
-    navigate('/eligible-companies');
+    navigate('/placement-application');
   };
 
   return (
     <Box
-      p="6"
-      borderRadius="md"
-      maxW="400px"
-      mx="auto"
-      mt="8"
-      bg="#f0f4f8"
-      color="#2a4365"
-      boxShadow="md"
-      textAlign="center"
+      bg="#000"
+      minH="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      fontFamily="sans-serif"
+      px="4"
     >
-      <Text fontSize="2xl" fontWeight="bold" mb="6">
-        Placement Portal
-      </Text>
+      <Box
+        p="10"
+        borderRadius="2xl"
+        maxW="500px"
+        w="100%"
+        bg="#111"
+        color="white"
+        boxShadow="0 0 25px rgba(255, 255, 255, 0.05)"
+        textAlign="center"
+      >
+        <Text fontSize="2xl" fontWeight="bold" mb="6">
+          Placement Portal
+        </Text>
 
-      <HStack spacing="6" justify="center">
-        <Button colorScheme="blue" onClick={handleProfileClick}>
-          Complete Profile
-        </Button>
-        <Button colorScheme="green" onClick={handleEligibleClick}>
-          Show Eligible Companies
-        </Button>
-      </HStack>
+        <HStack spacing="6" justify="center">
+          <Button
+            bg="#3182ce"
+            _hover={{ bg: "#2c5282" }}
+            color="white"
+            onClick={handleProfileClick}
+          >
+            Complete Profile
+          </Button>
+          <Button
+            bg="#38a169"
+            _hover={{ bg: "#2f855a" }}
+            color="white"
+            onClick={handleEligibleClick}
+          >
+            Show Eligible Companies
+          </Button>
+        </HStack>
+      </Box>
     </Box>
   );
 }

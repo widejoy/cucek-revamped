@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AddPlacementCompany.css'; // We'll create this CSS file
+import './AddPlacementCompany.css'; // Import the CSS file
 import { useNavigate } from 'react-router-dom';
 
 function AddCompany() {
@@ -14,7 +14,7 @@ function AddCompany() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,10 +28,10 @@ function AddCompany() {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: '', type: '' });
-    
+
     try {
       const accessToken = localStorage.getItem('accessToken');
-      
+
       const response = await fetch('http://127.0.0.1:8000/api/placement/company/', {
         method: 'POST',
         headers: {
@@ -53,7 +53,7 @@ function AddCompany() {
       }
 
       setMessage({ text: 'Company added successfully!', type: 'success' });
-      
+
       // Reset form after successful submission
       setFormData({
         name: '',
@@ -75,7 +75,7 @@ function AddCompany() {
   return (
     <div className="add-company-container">
       <h1 className="form-title">Add New Placement Company</h1>
-      
+
       {message.text && (
         <div className={`message ${message.type}`}>
           {message.text}
@@ -191,7 +191,7 @@ function AddCompany() {
         </button>
         <button
           className="submit-button"
-          onClick={()=>navigate("/companies")}
+          onClick={() => navigate("/companies")}
         >
           Back to Companies
         </button>

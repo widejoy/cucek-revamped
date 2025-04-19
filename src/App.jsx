@@ -38,6 +38,7 @@ import GenderJusticeCommittee from "./screens/GenderJusticeCommittee";
 import ManageExams from "./components/ui/ManageExams";
 import Eee from "./screens/eee";
 import ManageStudentMarks from "./components/ui/ManageStudentMarks";
+import ViewApplications from "./screens/ViewApplications";
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
           <Route element={<PlacementCompanies />} path="/placement-companies" />
           <Route element={<AddCompany />} path="/add-company" />
           <Route element={<PlacementAdmin />} path="/placement-admin" />
+          <Route element={<ViewApplications /> } path="/placement-applications/:company_id" />
           <Route element={<GentsHostel />} path="/gents-hostels" />
           <Route element={<LadiesHostel />} path="/ladies-hostels" />
           <Route element={<HostelCommittee />} path="/hostel-committee" />
