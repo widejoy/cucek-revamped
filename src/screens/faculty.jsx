@@ -137,7 +137,6 @@ const FacultyPage = () => {
             </Box>
 
             {/* Faculty List */}
-            {/* Faculty List */}
             <Box>
               <Heading size="lg" mb={4} color="teal.500">
                 Faculty
@@ -202,16 +201,18 @@ const FacultyCard = ({ faculty }) => {
               {line.trim()}
             </Text>
           ))}
-          <Button
-            mt={4}
-            as="a"
-            variant="outline"
-            color="black"
-            href={`https://iqac.cusat.ac.in/Web/profile_view/${faculty.path}`}
-            target="_blank"
-          >
-            View Full Profile
-          </Button>
+          {faculty.path && (
+            <Button
+              mt={4}
+              as="a"
+              variant="outline"
+              color="black"
+              href={`https://iqac.cusat.ac.in/Web/profile_view/${faculty.path}`}
+              target="_blank"
+            >
+              View Full Profile
+            </Button>
+          )}
         </Collapsible.Content>
         <Collapsible.Trigger asChild>
           <Button

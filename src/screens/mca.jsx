@@ -82,11 +82,7 @@ export default function Mca() {
         programs.
       </>
     ),
-    hod: (
-      <>
-       
-      </>
-    ),
+    hod: <></>,
   };
 
   return (
@@ -95,11 +91,8 @@ export default function Mca() {
       branchName="Masters of Computer Applications"
       subtitle="Where Innovation Meets Excellence"
       sectionContent={sectionContent}
-      hodPhoto={
-        ""
-      }
-      hodName={""}
-      hodProfilePath={"/"}
+      hodPhoto={"principal.png"}
+      hodName={"Asha latha K S"}
     />
   );
 }

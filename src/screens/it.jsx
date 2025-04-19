@@ -101,7 +101,6 @@ export default function It() {
         "https://cucek.cusat.ac.in/images/PIC%20&%20SIGN/IT/FACULTY%20PICS/02.jpg"
       }
       hodName={"Dr. Jabir K V T"}
-      hodProfilePath={"/"}
     />
   );
 }
