@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Text, Container } from "@chakra-ui/react";
-import { Toaster, toaster } from "../components/ui/toaster"
+import { Toaster, toaster } from "../components/ui/toaster";
 
 function CompletePlacementProfile() {
     const [cgpa, setCgpa] = useState("");
@@ -13,7 +12,7 @@ function CompletePlacementProfile() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 },
                 body: JSON.stringify({
                     cgpa: parseFloat(cgpa),
@@ -49,65 +48,108 @@ function CompletePlacementProfile() {
     };
 
     return (
-        <Container>
-            <Text fontSize={30} color="black">
+        <div style={{
+            backgroundColor: "#000",
+            color: "#fff",
+            minHeight: "100vh",
+            padding: "40px 20px",
+            fontFamily: "Arial, sans-serif"
+        }}>
+            <h1 style={{
+                fontSize: "28px",
+                marginBottom: "30px",
+                textAlign: "center"
+            }}>
                 Complete your placement profile
-            </Text>
+            </h1>
 
-            <Box
-                maxW="400px"
-                mx="auto"
-                mt="40px"
-                p="20px"
-                border="1px solid #ccc"
-                borderRadius="8px"
-                color="black"
-            >
-                <Text mb="4px" fontWeight="semibold" fontSize="sm">
+            <div style={{
+                maxWidth: "400px",
+                margin: "0 auto",
+                backgroundColor: "#1a1a1a",
+                padding: "20px",
+                borderRadius: "8px",
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)"
+            }}>
+                <label style={{ fontWeight: "600", fontSize: "14px" }}>
                     CGPA
-                </Text>
-                <Input
+                </label>
+                <input
                     type="number"
                     value={cgpa}
                     onChange={(e) => setCgpa(e.target.value)}
-                    mb="6px"
-                    fontSize="sm"
                     placeholder="e.g. 8.5"
+                    style={{
+                        width: "100%",
+                        padding: "8px 10px",
+                        margin: "6px 0 16px",
+                        borderRadius: "4px",
+                        border: "1px solid #444",
+                        backgroundColor: "#2c2c2c",
+                        color: "#fff",
+                        fontSize: "14px"
+                    }}
                 />
 
-                <Text mb="4px" fontWeight="semibold" fontSize="sm">
+                <label style={{ fontWeight: "600", fontSize: "14px" }}>
                     10th Percentage
-                </Text>
-                <Input
+                </label>
+                <input
                     type="number"
                     value={percentage10}
                     onChange={(e) => setPercentage10(e.target.value)}
-                    mb="6px"
-                    fontSize="sm"
                     placeholder="e.g. 90.0"
+                    style={{
+                        width: "100%",
+                        padding: "8px 10px",
+                        margin: "6px 0 16px",
+                        borderRadius: "4px",
+                        border: "1px solid #444",
+                        backgroundColor: "#2c2c2c",
+                        color: "#fff",
+                        fontSize: "14px"
+                    }}
                 />
 
-                <Text mb="4px" fontWeight="semibold" fontSize="sm">
+                <label style={{ fontWeight: "600", fontSize: "14px" }}>
                     12th Percentage
-                </Text>
-                <Input
+                </label>
+                <input
                     type="number"
                     value={percentage12}
                     onChange={(e) => setPercentage12(e.target.value)}
-                    mb="6px"
-                    fontSize="sm"
                     placeholder="e.g. 89.0"
+                    style={{
+                        width: "100%",
+                        padding: "8px 10px",
+                        margin: "6px 0 24px",
+                        borderRadius: "4px",
+                        border: "1px solid #444",
+                        backgroundColor: "#2c2c2c",
+                        color: "#fff",
+                        fontSize: "14px"
+                    }}
                 />
 
-                <br />
-                <br />
-                <Button variant="subtle" colorScheme="blue" onClick={handleSubmit}>
+                <button
+                    onClick={handleSubmit}
+                    style={{
+                        width: "100%",
+                        padding: "10px",
+                        backgroundColor: "#007bff",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "6px",
+                        fontWeight: "bold",
+                        cursor: "pointer"
+                    }}
+                >
                     Complete Profile
-                </Button>
-            </Box>
-            <Toaster />
+                </button>
+            </div>
 
-        </Container>
+            <Toaster />
+        </div>
     );
 }
 

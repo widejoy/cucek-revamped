@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 import { Input, Button } from '@chakra-ui/react';
 
 const ManageStudentMarks = () => {
-    const { class_id, subject_id, exam_id } = useParams();
+    const { class_id, exam_id } = useParams();
     const [students, setStudents] = useState([]);
     const [marksMap, setMarksMap] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [userRole, setUserRole] = useState("");
 
     const calculateGrade = (marks) => {
         if (marks >= 90) return "S";
@@ -19,6 +20,33 @@ const ManageStudentMarks = () => {
     };
 
     useEffect(() => {
+        const fetchUserRole = async () => {
+            try {
+                setLoading(true);
+                const response = await fetch(
+                    'http://127.0.0.1:8000/api/class/1/role/',
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                        },
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if (data?.role) {
+                    setUserRole(data.role)
+                }
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
         const fetchStudents = async () => {
             try {
                 const response = await fetch(`http://localhost:8000/api/class/${class_id}/details/`, {
@@ -64,6 +92,7 @@ const ManageStudentMarks = () => {
 
         fetchStudents();
         fetchResults();
+        fetchUserRole();
     }, [class_id]);
 
     const handleMarkChange = (studentId, value) => {
@@ -132,7 +161,7 @@ const ManageStudentMarks = () => {
                     fontWeight: 'bold',
                     textAlign: 'center',
                     marginBottom: '30px',
-                }}>Manage Student Marks</h1>
+                }}>Results</h1>
 
                 {loading ? (
                     <p style={{ textAlign: 'center', color: '#fff' }}>Loading...</p>
@@ -160,7 +189,7 @@ const ManageStudentMarks = () => {
                                     <tr key={student.id} style={{ borderBottom: '1px solid #2D3748' }}>
                                         <td style={{ padding: '10px' }}>{student.username}</td>
                                         <td style={{ padding: '10px' }}>
-                                            <Input
+                                            {userRole === "Teacher" && <Input
                                                 type="number"
                                                 placeholder="Enter Marks"
                                                 value={marksMap[student.id] || ''}
@@ -169,8 +198,10 @@ const ManageStudentMarks = () => {
                                                 width="100px"
                                                 color="#000"
 
-                                            />
+                                            />}
+                                            {userRole === "Student" && marksMap[student.id] || ''}
                                         </td>
+
                                         <td style={{ padding: '10px', color: gradeColors[grade] || '#fff' }}>
                                             {marksMap[student.id] ? grade : '-'}
                                         </td>
@@ -188,9 +219,10 @@ const ManageStudentMarks = () => {
                 )}
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button size="md" colorScheme="teal" onClick={handlePublishMark}>
+                    {userRole === "Teacher" && <Button size="md" colorScheme="teal" onClick={handlePublishMark}>
                         Publish Marks
-                    </Button>
+                    </Button>}
+
                 </div>
             </div>
         </div>
